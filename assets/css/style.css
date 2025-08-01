@@ -1,0 +1,54 @@
+:root{
+    /* font */
+    --font-primary: "Fira Code", monospace;
+    --font-secondary: ;
+
+
+    /* color */
+    /* задній фон */
+    --background-color: #27282A;
+    --background-color-transparent: rgba(39, 40, 42, 0.5);
+
+
+    /* додатковий колір */
+    --color-secondary: #C778DD;
+
+    /* кольори логотипу */
+    --logo-color: #FFFFFF;
+    --nav-color: #ACB0B7;
+    --nav-active-color: #FFFFFF;
+
+
+    /* колір media-sidebar */
+    --media-sidebar-color: #ACB0B7;
+    
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+body{
+    background-color: white;
+}
+
+.container{
+    max-width: calc(1024px + 171px * 2);
+    margin: 0 auto;
+    padding: 0 171px;
+}
+@media screen and (max-width: 1023px) {
+    .container{
+        max-width: calc(768px + 100px * 2);
+        padding: 0 100px;
+    }
+    
+}
+
+
+
+
+
