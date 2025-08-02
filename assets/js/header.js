@@ -1,125 +1,59 @@
-document.addEventListener("DOMContentLoaded", () => {
-  loadHeader();
-});
-
-// === 1. Завантаження header.html та ініціалізація ===
-function loadHeader() {
-  fetch("components/header.html")
-    .then(res => res.text())
+// === 📌 Вставка SVG ===
+function insertSVG(url, containerId, callback) {
+  fetch(url)
+    .then(response => response.text())
     .then(data => {
-      document.querySelector("#header-placeholder").innerHTML = data;
-
-      fadeInHeader();                  // Плавна поява
-      highlightActiveLink();          // Активне меню
-      preventSamePageNavigation();    // Блокування переходу
-      loadLogoSvg();                  // SVG логотип
-      loadArrowSvg();                 // SVG стрілка + мова
+      const container = document.getElementById(containerId);
+      container.innerHTML = data;
+      if (callback) callback(container);
     })
-    .catch(err => {
-      console.error("Помилка завантаження header.html:", err);
+    .catch(error => {
+      console.error(`Помилка завантаження SVG (${url}):`, error);
     });
 }
 
-// === 2. Плавна поява шапки ===
-function fadeInHeader() {
-  const header = document.querySelector(".header-fadein");
-  if (header) {
-    setTimeout(() => {
-      header.classList.add("visible");
-    }, 100);
+// === 📌 Використання SVG ===
+insertSVG('./assets/img/logo/logo2.svg', 'logo-header');
+insertSVG('./assets/img/icons/arrow-down.svg', 'down-arrow-language', () => {
+  const downArrow = document.querySelector('#down-arrow-language svg');
+  const languageSwitcherButton = document.querySelector('.language-switcher__button');
+  const languageSwitcher = document.querySelector('.language-switcher');
+  const languageDropdown = document.querySelector('.language-switcher__dropdown');
+
+  function closeLanguageMenu() {
+    languageSwitcher.classList.remove('open');
+    languageDropdown.classList.remove('open');
+    if (downArrow) downArrow.classList.remove('rotated');
+    languageSwitcherButton.setAttribute('aria-expanded', 'false');
   }
-}
 
-// === 3. Активне меню ===
-function highlightActiveLink() {
-  const currentPage = location.pathname.split("/").pop() || "index.html";
-  const navLinks = document.querySelectorAll(".nav-list a");
-
-  navLinks.forEach(link => {
-    const href = link.getAttribute("href").replace(/^\.\/|\/$/g, "");
-    const current = currentPage.replace(/^\.\/|\/$/g, "");
-
-    if (href === current) {
-      link.classList.add("active");
+  languageSwitcherButton.addEventListener('click', function (event) {
+    event.stopPropagation();
+    const isOpen = languageSwitcher.classList.contains('open');
+    if (isOpen) {
+      closeLanguageMenu();
+    } else {
+      languageSwitcher.classList.add('open');
+      languageDropdown.classList.add('open');
+      if (downArrow) downArrow.classList.add('rotated');
+      languageSwitcherButton.setAttribute('aria-expanded', 'true');
     }
   });
-}
 
-function preventSamePageNavigation() {
-  const navLinks = document.querySelectorAll(".nav-list a");
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-      const href = link.getAttribute("href").replace(/^\.\/|\/$/g, "");
-      const currentPage = location.pathname.split("/").pop() || "index.html";
-      const current = currentPage.replace(/^\.\/|\/$/g, "");
-
-      if (href === current) {
-        e.preventDefault();
-      }
-    });
-  });
-}
-
-// === 4. Завантаження логотипу ===
-function loadLogoSvg() {
-  fetch("./assets/img/logo/logo2.svg")
-    .then(res => res.text())
-    .then(svg => {
-      const logoContainer = document.querySelector("#logo-header");
-      if (logoContainer) {
-        logoContainer.innerHTML = svg;
-      }
-    });
-}
-
-// === 5. Завантаження стрілки та мови ===
-function loadArrowSvg() {
-  fetch("./assets/img/icons/arrow-down.svg")
-    .then(res => res.text())
-    .then(svg => {
-      const arrowContainer = document.querySelector("#down-arrow-language");
-      if (arrowContainer) {
-        arrowContainer.innerHTML = svg;
-      }
-
-      highlightActiveLanguage();   // Після вставки SVG
-      setupLanguageSwitcher();     // Ініціалізація логіки
-    });
-}
-
-// === 6. Активна мова ===
-function highlightActiveLanguage() {
-  const pathParts = location.pathname.split("/");
-  const isInEnFolder = pathParts.includes("en");
-  const activeLang = isInEnFolder ? "en" : "ua";
-
-  document.querySelectorAll('.language-switcher__dropdown button[data-lang]').forEach(btn => {
-    btn.classList.remove("active");
+  // === 📌 Закриття меню мови при кліку поза елементом
+  document.addEventListener('click', (e) => {
+    if (!languageSwitcher.contains(e.target)) {
+      closeLanguageMenu();
+    }
   });
 
-  const activeBtn = document.querySelector(`.language-switcher__dropdown button[data-lang="${activeLang}"]`);
-  if (activeBtn) {
-    activeBtn.classList.add("active");
-  }
-}
-
-// === 7. Поведінка перемикача мови ===
-function setupLanguageSwitcher() {
-  const switcher = document.querySelector(".language-switcher");
-  const button = switcher?.querySelector(".language-switcher__button");
-  const dropdown = switcher?.querySelector(".language-switcher__dropdown");
-
-  if (!switcher || !button || !dropdown) return;
-
-  button.addEventListener("click", () => {
-    const isOpen = dropdown.classList.toggle("open");
-    const arrowSvg = document.querySelector(".down-arrow-language svg");
-    if (arrowSvg) arrowSvg.classList.toggle("rotated", isOpen);
-    button.setAttribute("aria-expanded", isOpen);
+  // === 📌 Закриття меню мови при скролі
+  window.addEventListener('scroll', () => {
+    closeLanguageMenu();
   });
 
-  dropdown.querySelectorAll("button[data-lang]").forEach(langButton => {
+  // === 📌 Логіка перемикання мови
+  languageDropdown.querySelectorAll("button[data-lang]").forEach(langButton => {
     langButton.addEventListener("click", () => {
       const lang = langButton.getAttribute("data-lang");
       const pathParts = location.pathname.split("/");
@@ -138,171 +72,84 @@ function setupLanguageSwitcher() {
       window.location.href = newPath;
     });
   });
-    // Закриття меню при кліку поза перемикачем
-  document.addEventListener("click", (e) => {
-    if (!switcher.contains(e.target)) {
-      dropdown.classList.remove("open");
-      button.setAttribute("aria-expanded", "false");
-
-      const arrowSvg = document.querySelector(".down-arrow-language svg");
-      if (arrowSvg) arrowSvg.classList.remove("rotated");
-    }
-  });
-
-  // Закриття меню при скролі
-  window.addEventListener("scroll", () => {
-    dropdown.classList.remove("open");
-    button.setAttribute("aria-expanded", "false");
-
-    const arrowSvg = document.querySelector(".down-arrow-language svg");
-    if (arrowSvg) arrowSvg.classList.remove("rotated");
-  });
-
-}
+});
 
 
+// === 📌 Підсвічування активного пункту меню
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav-list a').forEach(link => {
+  const linkPath = link.getAttribute('href').split('/').pop();
+  if (linkPath === currentPath) {
+    link.classList.add('active');
+    link.addEventListener('click', e => {
+      e.preventDefault();
+    });
+  } else {
+    link.classList.remove('active');
+  }
+});
 
 
+// === 📌 Логіка бургер-меню
+const hamburger = document.getElementById('hamburger');
+const nav = document.getElementById('nav');
+const header = document.querySelector('.header'); // Перенесено сюди
+
+hamburger.addEventListener('click', () => {
+  const isActive = nav.classList.toggle('active');
+  hamburger.classList.toggle('active');
+
+  // Додаємо/знімаємо клас для фіксованого хедера
+  if (isActive) {
+    header.classList.add('fixed-header');
+    document.body.classList.add('no-scroll'); // щоб за потреби блокувати прокрутку
+  } else {
+    header.classList.remove('fixed-header');
+    document.body.classList.remove('no-scroll');
+  }
+});
 
 
+// === 📌 Логіка приховування хедера при скролі
+let lastScrollTop = 0;
+let headerPosition = 0;
 
+window.addEventListener('scroll', function () {
+  if (nav.classList.contains('active')) return; // Якщо меню відкрите — нічого не робимо
 
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-// фіксація висовування шапки
+  if (scrollTop > lastScrollTop) {
+    headerPosition = Math.min(headerPosition + (scrollTop - lastScrollTop), 100);
+  } else {
+    headerPosition = Math.max(headerPosition - (lastScrollTop - scrollTop), 0);
+  }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const header = document.querySelector(".header-father");
-  const body = document.body; // або інший контейнер, якщо треба
-  let lastScroll = window.scrollY;
-  let visibleAmount = 0;
-  let isSticky = false;
-
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.scrollY;
-    const scrollDiff = lastScroll - currentScroll;
-
-    if (currentScroll <= 10) {
-      header.classList.remove("header-sticky");
-      header.style.transform = "translateY(0)";
-      body.style.paddingTop = "0";  // прибираємо відступ
-      visibleAmount = 0;
-      isSticky = false;
-    }
-
-    if (currentScroll <= 300) {
-      lastScroll = currentScroll;
-      return;
-    }
-
-    if (scrollDiff > 0) {
-      if (!isSticky) {
-        header.classList.add("header-sticky");
-        body.style.paddingTop = `${header.offsetHeight}px`;  // додаємо відступ зверху
-        visibleAmount = 0;
-        isSticky = true;
-      }
-
-      // Ділимо scrollDiff на 2, щоб повільніше "вилазила"
-      visibleAmount += scrollDiff / 2;
-      if (visibleAmount > header.offsetHeight) visibleAmount = header.offsetHeight;
-    }
-
-    if (scrollDiff < 0 && isSticky) {
-      visibleAmount += scrollDiff / 2; // scrollDiff < 0 → зменшуємо також повільніше
-      if (visibleAmount < 0) visibleAmount = 0;
-    }
-
-    if (isSticky) {
-      const translateY = -(header.offsetHeight - visibleAmount);
-      header.style.transform = `translateY(${translateY}px)`;
-    }
-
-    lastScroll = currentScroll;
-  });
+  header.style.top = -headerPosition + 'px';
+  lastScrollTop = scrollTop;
 });
 
 
 
 
+// вставка зображень в mobile-social-list"
+const githubLogo = document.getElementById('github-logo-mobile-menu');
+const dribbbleLogo = document.getElementById('dribble-logo-mobile-menu');
+const figmaLogo = document.getElementById('figma-logo-mobile-menu');
 
-function loadHeader() {
-  fetch("components/header.html")
-    .then(res => res.text())
-    .then(data => {
-      document.querySelector("#header-placeholder").innerHTML = data;
+const svgFiles = [
+  '/assets/img/logo/github.svg',
+  '/assets/img/logo/dribble.svg',
+  '/assets/img/logo/figma.svg'
+];
 
-      // Після вставки header-а в DOM
-      fadeInHeader();                  
-      highlightActiveLink();          
-      preventSamePageNavigation();    
-      loadLogoSvg();                  
-      loadArrowSvg();                 
-      setupBurgerMenu();  // ← додаємо бургер тільки ТУТ
-      loadMobileMenuIcons(); // ← додай сюди
-    })
-    .catch(err => {
-      console.error("Помилка завантаження header.html:", err);
+const logos = [githubLogo, dribbbleLogo, figmaLogo];
+
+logos.forEach((logo, index) => {
+  const svgFile = svgFiles[index];
+  fetch(svgFile)
+    .then(response => response.text())
+    .then(svgContent => {
+      logo.innerHTML = svgContent;
     });
-}
-
-function setupBurgerMenu() {
-  const hamburger = document.getElementById("hamburger");
-  const navList = document.getElementById("nav");
-  const headerFather = document.querySelector(".header-father");
-
-  if (!hamburger || !navList) return;
-
-  hamburger.addEventListener("click", () => {
-    const isActive = hamburger.classList.toggle("active");
-    navList.classList.toggle("active");
-    headerFather.classList.toggle("active");
-
-    if (isActive) {
-      // Заборонити прокрутку
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      
-      // Додатковий фікс для iOS
-      document.addEventListener('touchmove', preventScroll, { passive: false });
-    } else {
-      // Дозволити прокрутку
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      
-      // Видалити обробник для iOS
-      document.removeEventListener('touchmove', preventScroll);
-    }
-  });
-
-  // Функція для блокування прокрутки на iOS
-  function preventScroll(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
-}
-
-
-
-function loadMobileMenuIcons() {
-  insertSvg('#github-logo-mobile-menu', './assets/img/logo/github.svg');
-  insertSvg('.dribbble-logo-mobile-menu', './assets/img/logo/dribble.svg');
-  insertSvg('#figma-logo-mobile-menu', './assets/img/logo/figma.svg');
-}
-
-function insertSvg(selector, path) {
-  fetch(path)
-    .then(res => res.text())
-    .then(svg => {
-      const container = document.querySelector(selector);
-      if (container) {
-        container.innerHTML = svg;
-      }
-    })
-    .catch(err => {
-      console.error(`Не вдалося завантажити SVG з ${path}`, err);
-    });
-}
-
+});
