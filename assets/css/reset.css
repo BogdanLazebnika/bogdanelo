@@ -35,11 +35,6 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-a:focus,
-button:focus {
-  outline: none;
-}
-
 body {
 	line-height: 1;
 }
@@ -370,6 +365,3 @@ textarea {
     padding: 0.2em 0;
 }
 
-a:focus {
-  outline: none;
-}
