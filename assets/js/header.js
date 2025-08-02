@@ -257,14 +257,33 @@ function setupBurgerMenu() {
     navList.classList.toggle("active");
     headerFather.classList.toggle("active");
 
-    // Заборона прокрутки, якщо меню активне
     if (isActive) {
-      document.body.classList.add("no-scroll");
+      // Заборонити прокрутку
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      
+      // Додатковий фікс для iOS
+      document.addEventListener('touchmove', preventScroll, { passive: false });
     } else {
-      document.body.classList.remove("no-scroll");
+      // Дозволити прокрутку
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      
+      // Видалити обробник для iOS
+      document.removeEventListener('touchmove', preventScroll);
     }
   });
+
+  // Функція для блокування прокрутки на iOS
+  function preventScroll(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
 }
+
 
 
 function loadMobileMenuIcons() {
