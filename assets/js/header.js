@@ -132,11 +132,3 @@ window.addEventListener('scroll', function () {
 
 
 
-logos.forEach((logo, index) => {
-  const svgFile = svgFiles[index];
-  fetch(svgFile)
-    .then(response => response.text())
-    .then(svgContent => {
-      logo.innerHTML = svgContent;
-    });
-});
