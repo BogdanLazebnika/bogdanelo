@@ -241,3 +241,106 @@ justify-content: end;
 .no-scroll {
   overflow: hidden;
 }
+
+
+/* Медіа-запит для мобільних */
+@media (max-width: 800px) {
+    .nav{
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 47px 100px 95px 100px;
+
+        height: 100vh;
+        width: 100%;
+        
+        flex-direction: column;
+        gap: 32px;
+        align-items: start;
+        justify-content: start;
+        overflow-y: auto; /* додати оверфлоу скрол */
+    }
+    .nav > *:nth-child(3),
+    .nav > *:nth-child(4),
+    .nav > *:nth-child(5) {
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .nav::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+    }
+
+    .nav::-webkit-scrollbar-thumb {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    }
+
+    .nav::-webkit-scrollbar-track {
+    background-color: var(--color-secondary);
+    }
+
+    .nav-list{
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        align-items: start;
+        justify-content: start;
+    }
+    .list-item a{
+        font-size: 32px;
+    }
+
+    .nav.active {
+        display: flex; /* показати при активації */
+    }
+
+    .language-switcher{
+        margin: 0;
+        padding: 0;
+    }
+    .language-switcher button {
+        margin: 0;
+        padding: 0;
+        font-size: 32px;
+        color: var(--nav-color);
+    }
+
+    .hamburger {
+        display: flex; /* показати бургер */
+    }
+
+    .mobile-social-list{
+        display: flex;
+        flex-direction: row;
+        
+        
+        gap: 32px;
+        align-items: center;
+        justify-content: center;
+    }
+    .mobile-social-list svg{
+        min-height: 42px;
+        width: auto;
+    }
+}
+
+
+/* Під 600px */
+@media (max-width: 600px) {
+    .nav{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+/* Медіа-запит для мобільних */
+@media (max-width: 400px) {
+    .nav{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}

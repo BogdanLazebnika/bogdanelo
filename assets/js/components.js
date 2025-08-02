@@ -1,24 +1,41 @@
 const components = [
-  { id: 'header-placeholder', htmlPath: './components/header.html', scriptPath: './assets/js/header.js' },
-  { id: 'media-sidebar-placeholder', htmlPath: './components/media-sidebar.html', scriptPath: './assets/js/media-sidebar.js' },
-  { id: 'footer-placeholder', htmlPath: './components/footer.html', scriptPath: './scripts/footer.js' }
-  // додай інші компоненти сюди
+  {
+    id: 'header-placeholder',
+    htmlPath: './components/header.html',
+    scriptPath: './assets/js/header.js'
+  },
+  {
+    id: 'media-sidebar-placeholder',
+    htmlPath: './components/media-sidebar.html',
+    scriptPath: './assets/js/media-sidebar.js'
+  },
+  {
+    id: 'footer-placeholder',
+    htmlPath: './components/footer.html',
+    scriptPath: './scripts/footer.js'
+  }
 ];
 
 async function loadComponent(id, htmlPath, scriptPath) {
   const placeholder = document.getElementById(id);
   if (!placeholder) return;
 
-  // Завантажуємо HTML
-  const response = await fetch(htmlPath);
-  const html = await response.text();
-  placeholder.innerHTML = html;
+  try {
+    const response = await fetch(htmlPath);
+    if (!response.ok) throw new Error(`Failed to load ${htmlPath}`);
 
-  // Після вставки HTML підключаємо скрипт компонента
-  if (scriptPath) {
-    const script = document.createElement('script');
-    script.src = scriptPath;
-    document.body.appendChild(script);
+    const html = await response.text();
+    placeholder.innerHTML = html;
+
+    if (scriptPath) {
+      const script = document.createElement('script');
+      script.src = scriptPath;
+      script.defer = true; // гарантія, що виконається після DOM
+      document.body.appendChild(script);
+    }
+
+  } catch (error) {
+    console.error(`[Component Loader Error]: ${error.message}`);
   }
 }
 
@@ -28,6 +45,4 @@ async function loadAllComponents() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadAllComponents();
-});
+document.addEventListener('DOMContentLoaded', loadAllComponents);
