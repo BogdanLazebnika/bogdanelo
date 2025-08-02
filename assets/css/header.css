@@ -470,8 +470,9 @@
         background-color: var(--background-color);
     }
 
-    body.no-scroll {
+   .no-scroll {
         overflow: hidden;
+        height: 100%;
     }
-
+        
 }

@@ -225,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
 function loadHeader() {
   fetch("components/header.html")
     .then(res => res.text())
@@ -239,12 +238,13 @@ function loadHeader() {
       loadLogoSvg();                  
       loadArrowSvg();                 
       setupBurgerMenu();  // ← додаємо бургер тільки ТУТ
-       loadMobileMenuIcons(); // ← додай сюди
+      loadMobileMenuIcons(); // ← додай сюди
     })
     .catch(err => {
       console.error("Помилка завантаження header.html:", err);
     });
 }
+
 function setupBurgerMenu() {
   const hamburger = document.getElementById("hamburger");
   const navList = document.getElementById("nav");
