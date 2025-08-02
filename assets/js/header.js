@@ -132,19 +132,6 @@ window.addEventListener('scroll', function () {
 
 
 
-// вставка зображень в mobile-social-list"
-const githubLogo = document.getElementById('github-logo-mobile-menu');
-const dribbbleLogo = document.getElementById('dribble-logo-mobile-menu');
-const figmaLogo = document.getElementById('figma-logo-mobile-menu');
-
-const svgFiles = [
-  '/assets/img/logo/github.svg',
-  '/assets/img/logo/dribble.svg',
-  '/assets/img/logo/figma.svg'
-];
-
-const logos = [githubLogo, dribbbleLogo, figmaLogo];
-
 logos.forEach((logo, index) => {
   const svgFile = svgFiles[index];
   fetch(svgFile)
