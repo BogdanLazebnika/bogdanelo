@@ -36,3 +36,4 @@ async function loadAllComponents() {
 document.addEventListener('DOMContentLoaded', () => {
   loadAllComponents();
 });
+
