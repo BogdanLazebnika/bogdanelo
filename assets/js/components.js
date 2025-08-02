@@ -14,18 +14,13 @@ async function loadComponent(id, htmlPath, scriptPath) {
   const html = await response.text();
   placeholder.innerHTML = html;
 
-  // Після вставки HTML завантажуємо і виконуємо скрипт синхронно
+  // Після вставки HTML підключаємо скрипт компонента
   if (scriptPath) {
-    const scriptResponse = await fetch(scriptPath);
-    const scriptText = await scriptResponse.text();
-
-    // Створюємо тег <script> з текстом скрипта і вставляємо в body
-    const scriptTag = document.createElement('script');
-    scriptTag.textContent = scriptText;
-    document.body.appendChild(scriptTag);
+    const script = document.createElement('script');
+    script.src = scriptPath;
+    document.body.appendChild(script);
   }
 }
-
 
 async function loadAllComponents() {
   for (const comp of components) {
@@ -36,4 +31,3 @@ async function loadAllComponents() {
 document.addEventListener('DOMContentLoaded', () => {
   loadAllComponents();
 });
-
