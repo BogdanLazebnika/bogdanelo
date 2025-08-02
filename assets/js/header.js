@@ -252,33 +252,19 @@ function setupBurgerMenu() {
 
   if (!hamburger || !navList) return;
 
-  let scrollPosition = 0;
-
   hamburger.addEventListener("click", () => {
     const isActive = hamburger.classList.toggle("active");
     navList.classList.toggle("active");
     headerFather.classList.toggle("active");
 
+    // Заборона прокрутки, якщо меню активне
     if (isActive) {
-      // Зберігаємо позицію скролу
-      scrollPosition = window.scrollY;
-
-      // Блокуємо прокрутку
       document.body.classList.add("no-scroll");
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
     } else {
-      // Відновлюємо прокрутку
       document.body.classList.remove("no-scroll");
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      window.scrollTo(0, scrollPosition);
     }
   });
 }
-
 
 
 function loadMobileMenuIcons() {
