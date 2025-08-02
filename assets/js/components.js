@@ -1,7 +1,7 @@
 const components = [
-  { id: 'header-placeholder', htmlPath: 'components/header.html', scriptPath: 'assets/js/header.js' },
-  { id: 'media-sidebar-placeholder', htmlPath: 'components/media-sidebar.html', scriptPath: 'assets/js/media-sidebar.js' },
-  { id: 'footer-placeholder', htmlPath: 'components/footer.html', scriptPath: 'scripts/footer.js' }
+  { id: 'header-placeholder', htmlPath: './components/header.html', scriptPath: './assets/js/header.js' },
+  { id: 'media-sidebar-placeholder', htmlPath: './components/media-sidebar.html', scriptPath: './assets/js/media-sidebar.js' },
+  { id: 'footer-placeholder', htmlPath: './components/footer.html', scriptPath: './scripts/footer.js' }
   // додай інші компоненти сюди
 ];
 
