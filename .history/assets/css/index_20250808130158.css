@@ -1,0 +1,113 @@
+.image-or-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    padding-top: 62px;
+    gap: 18px;
+}
+
+
+.text-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin: 0;
+    padding: 0;
+    margin-top: 74px;
+}
+.text-content h1{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 32px;
+
+    font-family: var(--font-primary);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--nav-color);
+    line-height: 1.5;
+}
+.text-content h1 span{
+    color: var(--accent-color);
+}
+
+.text-content p{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 18px;
+
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--nav-color);
+
+    line-height: 1.8;
+    max-width: 463px;
+}
+
+.text-content button{
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+
+
+    
+    
+    padding: 8px 16px;
+    border: 1px solid var(--accent-color);
+    color: var(--nav-active-color);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: medium;
+    line-height: 1.8;
+
+    display: flex;
+    width: max-content;
+
+
+}
+
+
+
+
+.working-status-under-logo{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    width: ;
+}
+
+.working-status-under-logo .color-box{
+    width: 16px;
+    height: 16px;
+    background-color: var(--accent-color);
+}
+
+
+
+
+.hero-people-img-container{
+    position: relative;
+}
+.logo-initials{
+    position: absolute;
+    top: 84px;
+    left: 0px;
+    z-index: -1;
+}
+.logo-initials svg{
+    width: 155px;
+    height: 155px;
+    color: var(--accent-color);
+}
+
+
+
+
+

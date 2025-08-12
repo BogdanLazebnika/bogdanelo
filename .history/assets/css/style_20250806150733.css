@@ -1,0 +1,75 @@
+:root{
+    /* font */
+    --font-primary: "Fira Code", monospace;
+    --font-secondary: ;
+
+
+    /* color */
+    /* задній фон */
+    --background-color: #27282A;
+    --background-color-transparent: rgba(39, 40, 42, 0.5);
+
+
+    /* додатковий колір */
+    --accent-color: #C778DD;
+    --accent-color-transparent: rgba(199, 120, 221, 0.5);
+    --accent-color-shadow: 0 1px 5px rgba(141, 79, 133, 0.2);
+
+    /* кольори логотипу */
+    --logo-color: #FFFFFF;
+    --nav-color: #ACB0B7;
+    --nav-active-color: #FFFFFF;
+
+
+    /* колір media-sidebar */
+    --media-sidebar-color: #ACB0B7;
+    
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+body{
+    background-color: var(--background-color);
+}
+body::before {
+  background-color: rgba(255, 255, 255, 0.5); /* тут задаєш прозорість */
+}
+
+.container{
+    max-width: calc(1024px + 171px * 2);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 171px;
+    padding-right: 171px;
+    background-color: ;
+}
+
+main{
+    min-height: 100vh;
+}
+@media screen and (max-width: 1023px) {
+    .container{
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+    
+}
+@media screen and (max-width: 600px) {
+    .container{
+        padding-left: 50px;
+        padding-right: 50px;
+    } 
+}
+@media screen and (max-width: 400px) {
+    .container{
+        padding-left: 16px;
+        padding-right: 16px;
+    } 
+}
+
+

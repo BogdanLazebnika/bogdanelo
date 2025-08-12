@@ -1,0 +1,461 @@
+.button-open-options-container{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 9999;
+    transition: all 0.3s ease-in-out;
+}
+.button-open-options-container-content{
+    position: absolute;
+    z-index: 9999
+}
+
+
+.vertical-line-options{
+    background-color: var(--nav-color);
+    width: 1px;
+    height: 61px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-options-container{
+    position: absolute;
+    right: 17px;
+    top: 0px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.button-options-container button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+
+    color: var(--nav-color);
+    transition: all 0.3s ease-in-out;
+}
+
+
+.button-hide-button-options-icon svg{
+  color: var(--nav-color);
+  color: transparent;
+  rotate: 0deg;
+  transition: all 0.3s ease-in-out;
+}
+.button-hide-button-options-icon svg:hover{
+    color: var(--nav-active-color);
+}
+
+.button-options-container.hidden-options{
+    top: -100px;
+}
+
+
+
+.button-options-container:hover .button-hide-button-options-icon svg{
+    color: var(--nav-color);
+}
+
+.button-options-container.hidden-options .button-hide-button-options-icon svg{
+    rotate: 180deg;
+    color: var(--nav-color);
+}
+
+
+
+
+
+@media screen and (max-width: 400px) {
+  .button-open-options-container{
+    position: fixed;
+    top: auto;
+    bottom: 0px;
+    right: 0px;
+    z-index: 9999;
+    transition: all 0.3s ease-in-out;
+}
+.button-open-options-container-content{
+    position: absolute;
+    z-index: 9999
+}
+
+
+.vertical-line-options{
+    background-color: var(--nav-color);
+    width: 31px;
+    height: 1px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-options-container{
+    position: absolute;
+    right: -64px;
+    top: auto;
+    bottom: 90px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: row-reverse;
+    /* перевернути row */
+    
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.button-options-container button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+
+    color: var(--nav-color);
+    transition: all 0.3s ease-in-out;
+}
+
+
+.button-hide-button-options-icon svg{
+    color: var(--nav-color);
+    rotate: -90deg;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.button-options-container.hidden-options{
+    right: 0px;
+    top: auto;
+}
+
+
+
+.button-options-container:hover .button-hide-button-options-icon svg{
+    color: var(--nav-color);
+}
+
+.button-options-container.hidden-options .button-hide-button-options-icon svg{
+    rotate: 90deg;
+    color: var(--nav-color);
+}
+
+}
+
+
+
+/* Основне вікно */
+#draggable-options {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  height: 500px;
+  background-color: var(--background-color);
+  border-radius: 12px 12px 0 0;
+  box-shadow: var(--accent-color-shadow);
+  z-index: 99999;
+  resize: both;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.button-open-options-list-list-one-level{
+  overflow: auto;
+}
+/* Заголовок для перетягування */
+.settings-panel-header {
+  padding: 10px;
+
+
+
+
+  background-color: var(--accent-color);
+
+
+
+
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--nav-color);
+  
+}
+
+/* Тіло вікна */
+.settings-panel-body {
+  padding: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Ховати при старті */
+.hidden {
+  display: none !important;
+}
+
+#draggable-options {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--accent-color) transparent; /* Firefox */
+}
+
+/* Webkit (Chrome, Edge, Safari) */
+#draggable-options::-webkit-scrollbar {
+  width: 6px; /* тонка лінія */
+}
+
+#draggable-options::-webkit-scrollbar-track {
+  background: transparent; /* або можна задати напівпрозорий фон */
+}
+
+
+
+
+.settings-panel-header span{
+  color: var(--nav-active-color);
+  font-family: var(--font-primary);
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  margin: 5px;
+
+}
+.settings-panel-header button{
+  color: var(--nav-active-color);
+  font-family: var(--font-primary);
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  margin: 5px;
+
+}
+
+.button-open-options-list-list-one-level{
+  padding: 20px 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: var(--font-primary);
+}
+.button-open-options-list-list-one-level span{
+  color: var(--nav-active-color);
+  font-family: var(--font-primary);
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  margin: 5px;
+}
+.button-open-options-list-list-two-level{
+  border-bottom: 1px solid var(--background-color);
+  margin: 0;
+  padding: 0;
+  
+  margin: 15px;
+  
+}
+.button-open-options-list-list-two-level li button{
+  border: none;
+  background-color: transparent;
+  color: var(--nav-color);
+  margin: 0;
+  padding: 0;
+
+
+  cursor: pointer;
+
+  color: var(--nav-color);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  margin: 5px;
+
+  border: 1px solid transparent;
+  border-radius: 1px;
+  padding: 5px;
+
+  box-shadow: var(--accent-color);
+
+  transition: all 0.3s ease-in-out;
+}
+.button-open-options-list-list-two-level li button.active{
+  color: var(--nav-active-color);
+  border-bottom: 1px solid var(--accent-color);
+  border-left: 1px solid var(--accent-color);
+  margin-left: 15px;
+}
+.button-open-options-list-list-two-level li button:hover{
+  color: var(--nav-active-color);
+  margin-left: 15px;
+}
+
+.button-open-options-list-list-two-level li{
+  display: flex;
+  align-items: center;
+}
+
+
+
+.button-open-options-list-item-colors{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.button-open-options-list-list-two-level-colors li span{
+  display: inline-block;
+  font-size: 18px;
+  margin: 5px 5px 5px 15px;
+  padding: 5px;
+}
+
+.button-open-options-list-list-two-level-colors li{
+  display: grid;
+  grid-template-columns: 130px 50px 1fr;
+  gap: 15px;
+  align-items: center;
+}
+
+
+.button-open-options-list-list-two-level-colors button{
+  border: none;
+  background-color: transparent;
+  color: var(--nav-color);
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 1px;
+  box-shadow: var(--accent-color-shadow);
+  transition: all 0.3s ease-in-out;
+}
+.button-open-options-list-list-two-level-colors button:hover,
+.button-open-options-list-list-two-level-colors button:focus{
+  color: var(--nav-active-color);
+  border: 1px solid var(--accent-color);
+}
+
+
+
+
+.button-open-options-list-item-reset{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+
+
+
+.button-open-options-list-item{}
+
+#resetAllSettingsBtn{
+  margin-top: 50px;
+  border: none;
+  background-color: transparent;
+  color: var(--nav-active-color);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  margin: 1px;
+  border: 1px solid transparent;
+  border-radius: 1px;
+  box-shadow: var(--accent-color-shadow);
+  transition: all 0.3s ease-in-out;
+
+  border: 1px solid var(--accent-color);
+  border-radius: 1px;
+  box-shadow: var(--accent-color-shadow);
+  transition: all 0.3s ease-in-out;
+  margin-top: 100px;
+}
+#resetAllSettingsBtn:hover{
+  background-color: var(--accent-color);
+}
+
+
+
+.modal-clear-options {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-clear-options.hidden {
+  display: none;
+}
+
+.modal-content-clear-options {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.modal-buttons-clear-options {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons-clear-options button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmResetYes {
+  background-color: #d9534f; /* червоний */
+  color: white;
+}
+
+#confirmResetNo {
+  background-color: #5bc0de; /* блакитний */
+  color: white;
+}
+
+
+
+
+
+
+
+/* Налаштування під телефон */
+@media screen and (max-width: 767px) {
+  #draggable-options {
+  bottom: 60px;
+}
+  
+}

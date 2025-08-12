@@ -1,0 +1,8 @@
+
+
+
+.footer-main{
+    display: flex;
+    flex-direction: space-a;
+    gap: 16px;
+}

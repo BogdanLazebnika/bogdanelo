@@ -1,0 +1,53 @@
+.image-or-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 62px;
+    gap: 18px;
+}
+
+
+.text-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.text-content h1{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 32px;
+
+    font-family: var(--font-primary);
+    font-size: 50px;
+    font-weight: 400;
+    color: var(--nav-color);
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+}
+}
+
+
+
+
+
+
+.hero-people-img-container{
+    position: relative;
+}
+.logo-initials{
+    position: absolute;
+    top: 84px;
+    left: 0px;
+    z-index: -1;
+}
+.logo-initials svg{
+    width: 155px;
+    height: 155px;
+    color: var(--accent-color);
+}
+
+
+
+
+

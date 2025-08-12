@@ -1,0 +1,60 @@
+/* === Анімація появи всієї панелі === */
+.media-sidebar-fadein {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: sidebarFadeIn 0.8s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+/* === Плавне зростання лінії === */
+.vertical-line {
+  animation: verticalLineGrow 1s ease-out forwards;
+  animation-delay: 0.4s;
+  height: 0; /* Початкове значення для анімації */
+  overflow: hidden;
+}
+
+/* === Анімація пунктів списку === */
+.media-sidebar-item {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInSidebarItem 0.5s ease-out forwards;
+}
+
+.media-sidebar-item:nth-child(1) {
+  animation-delay: 0.8s;
+}
+.media-sidebar-item:nth-child(2) {
+  animation-delay: 1s;
+}
+.media-sidebar-item:nth-child(3) {
+  animation-delay: 1.2s;
+}
+
+/* === Анімація кнопки === */
+.toggle-sidebar {
+  animation: fadeInSidebarItem 0.5s ease-out forwards;
+  animation-delay: 1.4s;
+}
+
+
+/* === Кадри анімацій === */
+@keyframes sidebarFadeIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes verticalLineGrow {
+  to {
+    height: 191px; /* Це значення вже є в твоєму стилі */
+  }
+}
+
+@keyframes fadeInSidebarItem {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

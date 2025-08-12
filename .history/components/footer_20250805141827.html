@@ -1,0 +1,181 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+
+            <!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Settings Example</title>
+    <style>
+        body {
+            background-color: #FFFFFF; /* Стандартний фон */
+            color: #000000; /* Стандартний текст */
+        }
+        /* Додайте стилі для акцентного кольору */
+        .accent {
+            color: var(--accent-color, #C778DD);
+        }
+    </style>
+</head>
+<body>
+
+<div class="button-open-options-container">
+    <div class="button-open-options-container-content">
+        <div class="button-options-container">
+            <div class="vertical-line-options"></div>
+            <button class="button-open-options-button">
+                <div id="button-open-options-button-icon"></div>
+            </button>
+            <button class="button-hide-button-options-icon">
+                <div id="button-hide-button-options-icon"></div>
+            </button>
+        </div>
+        
+        <div id="draggable-options" class="button-open-options-list hidden">
+            <div class="settings-panel-header">
+                <span>Налаштування</span>
+                <button onclick="closeSettingsPanel()">✕</button>
+            </div>
+            <ul class="button-open-options-list-list-one-level">
+                <li class="button-open-options-list-item">
+                    <span>Кольори</span>
+                    <ul class="button-open-options-list-list-two-level">
+                        <li>
+                            <span>Акцент</span>
+                            <input type="color" id="accentColorPicker">
+                            <button id="accentColorResetBtn">Скинути акцент</button>
+                        </li>
+                        <li>
+                            <span>Текст</span>
+                            <input type="color" id="backgroundColorPicker">
+                            <button id="backgroundColorResetBtn">Скинути фон</button>
+                        </li>
+                        <li>
+                            <span>Фон</span>
+                            <input type="color" id="textColorPicker">
+                            <button id="textColorResetBtn">Скинути текст</button>
+                        </li>
+                    </ul>
+                </li>
+                <li class="button-open-options-list-item">
+                    <button id="resetAllSettingsBtn">Скинути всі налаштування</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+// Функція для збереження кольорів в локальному сховищі
+function saveColorSetting(key, value) {
+    const settings = JSON.parse(localStorage.getItem('siteSettings')) || {};
+    if (value === undefined) {
+        delete settings[key];
+    } else {
+        settings[key] = value;
+    }
+    localStorage.setItem('siteSettings', JSON.stringify(settings));
+}
+
+// Функція для завантаження кольорів з локального сховища
+function loadColorSettings() {
+    const settings = JSON.parse(localStorage.getItem('siteSettings')) || {};
+    const accentColor = settings.accentColor || '#C778DD'; // стандартний акцент
+    const backgroundColor = settings.backgroundColor || '#FFFFFF'; // стандартний фон
+    const textColor = settings.textColor || '#000000'; // стандартний текст
+
+    // Встановлюємо значення кольорів у пікерах
+    document.getElementById('accentColorPicker').value = accentColor;
+    document.getElementById('backgroundColorPicker').value = backgroundColor;
+    document.getElementById('textColorPicker').value = textColor;
+
+    // Застосування кольорів до стилів
+    document.body.style.setProperty('--accent-color', accentColor);
+    document.body.style.backgroundColor = backgroundColor;
+    document.body.style.color = textColor;
+}
+
+// Ініціалізація кольорових налаштувань
+document.addEventListener('DOMContentLoaded', () => {
+    loadColorSettings();
+
+    // Обробник для кольорового пікера акценту
+    const accentColorPicker = document.getElementById('accentColorPicker');
+    if (accentColorPicker) {
+        accentColorPicker.addEventListener('input', () => {
+            saveColorSetting('accentColor', accentColorPicker.value);
+            document.body.style.setProperty('--accent-color', accentColorPicker.value);
+        });
+    }
+
+    // Обробник для кольорового пікера фону
+    const backgroundColorPicker = document.getElementById('backgroundColorPicker');
+    if (backgroundColorPicker) {
+        backgroundColorPicker.addEventListener('input', () => {
+            saveColorSetting('backgroundColor', backgroundColorPicker.value);
+            document.body.style.backgroundColor = backgroundColorPicker.value;
+        });
+    }
+
+    // Обробник для кольорового пікера тексту
+    const textColorPicker = document.getElementById('textColorPicker');
+    if (textColorPicker) {
+        textColorPicker.addEventListener('input', () => {
+            saveColorSetting('textColor', textColorPicker.value);
+            document.body.style.color = textColorPicker.value;
+        });
+    }
+
+    // Обробник для кнопки скидання акцентного кольору
+    const resetAccentColorBtn = document.getElementById('accentColorResetBtn');
+    if (resetAccentColorBtn) {
+        resetAccentColorBtn.addEventListener('click', () => {
+            saveColorSetting('accentColor', undefined);
+            loadColorSettings(); // Оновлюємо кольоровий пікер
+        });
+    }
+
+    // Обробник для кнопки скидання фону
+    const resetBackgroundColorBtn = document.getElementById('backgroundColorResetBtn');
+    if (resetBackgroundColorBtn) {
+        resetBackgroundColorBtn.addEventListener('click', () => {
+            saveColorSetting('backgroundColor', undefined);
+            loadColorSettings(); // Оновлюємо кольоровий пікер
+        });
+    });
+
+    // Обробник для кнопки скидання тексту
+    const resetTextColorBtn = document.getElementById('textColorResetBtn');
+    if (resetTextColorBtn) {
+        resetTextColorBtn.addEventListener('click', () => {
+            saveColorSetting('textColor', undefined);
+            loadColorSettings(); // Оновлюємо кольоровий пікер
+        });
+    });
+
+    // Обробник для кнопки скидання всіх налаштувань
+    const resetAllSettingsBtn = document.getElementById('resetAllSettingsBtn');
+    if (resetAllSettingsBtn) {
+        resetAllSettingsBtn.addEventListener('click', () => {
+            localStorage.removeItem('siteSettings');
+            loadColorSettings(); // Оновлюємо кольорові пікери
+        });
+    });
+});
+
+// Функція для закриття панелі налаштувань
+function closeSettingsPanel() {
+    document.getElementById('draggable-options').classList.add('hidden');
+}
+</script>
+
+</body>
+</html>
+
+
+        
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,25 @@
+.image-or-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+}
+
+
+
+
+.hero-people-img-container{
+    position: relative;
+}
+.logo-initials{
+    position: absolute;
+    top: 104px;
+    left: 50px;
+}
+.logo-initials svg{
+    width: 155px;
+    height: 155px;
+    color: var(--accent-color);
+}
+
+

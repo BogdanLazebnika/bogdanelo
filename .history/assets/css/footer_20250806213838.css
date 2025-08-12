@@ -1,0 +1,35 @@
+
+
+
+.footer-main{
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 0 48px 0;
+}
+
+.footer-info{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+.footer-logo-container{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+
+.footer-logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.footer-logo svg{
+    width: 16px;
+    height: 16px;
+}
+.footer-logo span{
+    margin-left: 8px;
+}

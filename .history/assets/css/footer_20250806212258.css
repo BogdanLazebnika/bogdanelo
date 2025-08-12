@@ -1,0 +1,8 @@
+
+
+
+.footer-info{
+    display: flex;
+    flex-direction: space-between;
+    gap: 16px;
+}

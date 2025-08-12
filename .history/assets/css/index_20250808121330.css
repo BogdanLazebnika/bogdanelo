@@ -1,0 +1,26 @@
+.logo-initials svg{
+    color: brown;
+
+}
+
+.image-or-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+}
+
+
+
+
+.hero-people-img-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.logo-initials{
+    position: absolute;
+    top: 84px;
+}
+
+

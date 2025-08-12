@@ -1,0 +1,80 @@
+.image-or-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    padding-top: 62px;
+    gap: 18px;
+}
+
+
+.text-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin: 0;
+    padding: 0;
+    margin-top: 74px;
+}
+.text-content h1{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 32px;
+
+    font-family: var(--font-primary);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--nav-color);
+    line-height: 1.5;
+}
+.text-content h1 span{
+    color: var(--accent-color);
+}
+
+.text-content p{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 18px;
+
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--nav-color);
+
+    line-height: 1.8;
+    max-width: 463px;
+}
+
+.text-content button{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 18px;
+    margin-right: 18px;
+
+    display: flex;
+    w
+}
+
+
+
+
+
+.hero-people-img-container{
+    position: relative;
+}
+.logo-initials{
+    position: absolute;
+    top: 84px;
+    left: 0px;
+    z-index: -1;
+}
+.logo-initials svg{
+    width: 155px;
+    height: 155px;
+    color: var(--accent-color);
+}
+
+
+
+
+

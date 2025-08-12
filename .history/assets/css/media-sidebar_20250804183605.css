@@ -1,0 +1,121 @@
+/* === СТИЛІ ДЛЯ САЙДБАРА === */
+.media-sidebar-fadein {
+    position: fixed;
+    top: 0;
+    left: 17px;
+    z-index: 1100;
+    transition: all 0.3s ease-in-out;
+}
+
+.media-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* === СТИЛІ ДЛЯ ВЕРТИКАЛЬНОЇ ЛІНІЇ === */
+.vertical-line {
+    background-color: var(--media-sidebar-color);
+    width: 1px;
+    height: 191px;
+    margin-bottom: 8px;
+}
+
+/* === СТИЛІ ДЛЯ СПИСКУ САЙДБАРА === */
+.media-sidebar-list {
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.media-sidebar-item {
+    margin: 6px;
+}
+
+.media-sidebar-item svg {
+    height: 21px;
+    
+}
+
+/* === СТАНИ САЙДБАРА === */
+.media-sidebar {
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    will-change: transform, opacity;
+}
+
+.media-sidebar.state-0 {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.media-sidebar.state-1 {
+    transform: translateY(-191px);
+    opacity: 1;
+}
+
+.media-sidebar.state-2 {
+    transform: translateY(calc(-100% + 35px));
+    opacity: 0.6;
+}
+
+/* === СТИЛІ ДЛЯ КНОПКИ ПЕРЕМИКАННЯ === */
+.toggle-sidebar {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.media-sidebar:hover .toggle-sidebar {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.media-sidebar.state-2 .toggle-sidebar {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toggle-sidebar {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* === СТИЛІ ДЛЯ ІКОНКИ ПЕРЕМИКАННЯ === */
+.toggle-sidebar svg {
+    color: var(--media-sidebar-color);
+    width: 20px;
+    height: 20px;
+}
+
+#toggle-sidebar-icon {
+    transition: transform 0.3s ease;
+    transform: rotate(180deg);
+}
+
+.media-sidebar.state-2 #toggle-sidebar-icon {
+    transform: rotate(0deg);
+}
+
+
+/* === Стилі для медіа-запитів */
+
+
+/* === 800px === */
+@media screen and (max-width: 800px) {
+    .media-sidebar-fadein {
+        display: none;
+    }
+}
+
+
+.media-sidebar-fadein.preload {
+  visibility: hidden;
+  transform: translateY(-40px); /* стартовий стан */
+}
+.media-sidebar-fadein {
+  transition: transform 0.4s ease-out;
+}

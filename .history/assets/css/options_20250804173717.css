@@ -1,0 +1,107 @@
+.button-open-options-container{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 9999;
+}
+.button-open-options-container-content{
+    position: absolute;
+    z-index: 9999
+}
+
+
+.vertical-line-options{
+    background-color: var(--media-sidebar-color);
+    width: 1px;
+    height: 61px;
+    margin-bottom: 8px;
+}
+
+.button-options-container{
+    position: absolute;
+    right: 17px;
+    top: 0px;
+
+
+
+    
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+#button-hide-button-options-icon{
+    fill: transparent;
+    rotate: 0deg;
+}
+.button-options-container button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+.button-options-container.hidden-options{
+    top: -61px;
+}
+
+.button-options-container.hidden-options #button-hide-button-options-icon{
+    rotate: 180deg;
+    fill: var(--nav-color);
+}
+
+
+
+
+
+
+
+
+
+/* Основне вікно */
+#draggable-options {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 99999;
+  resize: both;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Заголовок для перетягування */
+.settings-panel-header {
+  padding: 10px;
+  background-color: #f0f0f0;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Тіло вікна */
+.settings-panel-body {
+  padding: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Ховати при старті */
+.hidden {
+  display: none !important;
+}
+

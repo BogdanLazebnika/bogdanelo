@@ -1,0 +1,84 @@
+<div class="button-open-options-container">
+  <div class="button-open-options-container-content">
+    
+
+    <div class="button-options-container">
+        
+        <div class="vertical-line-options"></div>
+        
+        
+        <button class="button-open-options-button">
+            <div id="button-open-options-button-icon"></div>
+        </button>
+        
+        <button class="button-hide-button-options-icon">
+            <div id="button-hide-button-options-icon"></div>
+        </button>
+    </div>
+    
+    <div id="draggable-options" class="button-open-options-list hidden">
+        <div class="settings-panel-header">
+            <span>Налаштування</span>
+            <button onclick="closeSettingsPanel()">✕</button>
+        </div>
+      <ul class="button-open-options-list-list-one-level">
+        
+        <!-- FixedHeader -->
+        <li class="button-open-options-list-item">
+          <span>Фіксація шапки</span>
+          <ul class="button-open-options-list-list-two-level">
+            <li><button onclick="updateUserSetting('fixedHeader', undefined)">Стандарт (немає фіксації)</button></li>
+            <li><button onclick="updateUserSetting('fixedHeader', true)">Плаваюча шапка</button></li>
+            <li><button onclick="updateUserSetting('fixedHeader', 'always')">Завжди фіксована шапка</button></li>
+          </ul>
+        </li>
+
+       <!-- Theme -->
+        <li class="button-open-options-list-item">
+          <span>Тема</span>
+          <ul class="button-open-options-list-list-two-level">
+            <li><button onclick="updateUserSetting('theme', undefined)">Стандарт (Темна тема)</button></li>
+            <li><button onclick="updateUserSetting('theme', 'light')">Світла тема</button></li>
+          </ul>
+        </li>
+        
+        <!-- Accent Color -->
+        <li class="button-open-options-list-item">
+          <span>Кольори</span>
+          <ul class="button-open-options-list-list-two-level">
+            <li>
+              <span>Акцент</span>
+              <input type="color" id="accentColorPicker">
+              <button id="accentColorResetBtn">Скинути акцент</button>
+            </li>
+            <li>
+              <span>Текст</span>
+              <input type="color" id="backgroundColorPicker">
+              <button id="backgroundColorResetBtn">Скинути Текст</button>
+            </li>
+            <li>
+              <span>Фон</span>
+              <input type="color" id="textColorPicker">
+              <button id="textColorResetBtn">Скинути текст</button>
+            </li>
+          </ul>
+        </li>
+
+        <li class="button-open-options-list-item">
+          <button id="resetAllSettingsBtn">Скинути всі налаштування</button>
+
+          <!-- Модалка підтвердження -->
+          <div id="confirmResetModal" class="modal-clear-options hidden">
+            <div class="modal-content-clear-options">
+              <p>Точно хочете видалити всі налаштування?</p>
+              <div class="modal-buttons-clear-options">
+                <button id="confirmResetYes">Так</button>
+                <button id="confirmResetNo">Ні</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

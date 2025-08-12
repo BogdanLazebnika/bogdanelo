@@ -1,0 +1,11 @@
+.logo-initials svg{
+    color: brown;
+
+}
+
+.image-or-text-container{
+    display: flex;
+    flex-direction: row;
+    align-items: ;
+    justify-content: center;
+}
