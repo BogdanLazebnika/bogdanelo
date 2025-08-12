@@ -1056,7 +1056,10 @@
 }
 .contact-link-item a:hover,
 .contact-link-item a:focus{
-    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--nav-color);
 }
 .contact-link-item span{
      overflow: hidden;          /* ховаємо зайве */

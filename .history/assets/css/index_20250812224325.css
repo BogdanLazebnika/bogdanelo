@@ -1054,10 +1054,6 @@
     font-size: 16px;
     font-weight: normal;
 }
-.contact-link-item a:hover,
-.contact-link-item a:focus{
-    color: var(--accent-color);
-}
 .contact-link-item span{
      overflow: hidden;          /* ховаємо зайве */
     white-space: nowrap;       /* не переносимо рядок */
