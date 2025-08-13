@@ -51,10 +51,150 @@
 
 
 
-    
+<style>
+  /* CSS */
+  :root { --decor-gutter: 80px; }
 
-    <main id="main">
+  #main {
+    position: relative; /* важливо для абсолютного позиціонування декорів */
+    /* padding-left / padding-right можуть змінюватись скриптом тільки за потреби */
+    overflow: visible;
+  }
 
+  /* бічні "гатери", в яких лежать декори */
+  .decor-side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--decor-gutter);
+    pointer-events: none; /* не заважають клікам */
+    z-index: 2;
+    overflow: visible;
+    display: block;
+  }
+  .decor-side.left  { left: 0;  }
+  .decor-side.right { right: 0; }
+
+  /* одиночний декор = блок з svg всередині */
+  .decor-item {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%); /* центруємо по горизонталі gutter'а */
+    will-change: transform, opacity;
+    opacity: 0.25;
+    user-select: none;
+  }
+  .decor-item svg { display: block; width: 100%; height: auto; }
+
+  /* додаткове: приховуємо на дуже малих екранах */
+  @media (max-width: 600px) {
+    .decor-side { display: none; }
+  }
+</style>
+
+<script>
+/* JS: додає декори в left/right gutter всередині main */
+(function () {
+  const MAIN_SELECTOR = '#main';
+  const GUTTER_PX = 80;        // максимальна ширина справа/зліва
+  const PER_SIDE = 10;         // кількість декорів на бік (міняй як потрібно)
+  const SIZE_MIN = 24;        // мін ширина декора
+  const SIZE_MAX = GUTTER_PX; // макс ширина декора (не більше gutter)
+
+  const main = document.querySelector(MAIN_SELECTOR) || document.body;
+  if (!main) return;
+
+  // — 1) гарантуємо позиціювання і резервуємо місце (padding) для декорів,
+  // тільки якщо поточний padding < GUTTER_PX (щоб не ламати ісущий відступ)
+  const cs = getComputedStyle(main);
+  const padL = parseFloat(cs.paddingLeft) || 0;
+  const padR = parseFloat(cs.paddingRight) || 0;
+  const needL = Math.max(0, GUTTER_PX - padL);
+  const needR = Math.max(0, GUTTER_PX - padR);
+  if (needL > 0) main.style.paddingLeft = (padL + needL) + 'px';
+  if (needR > 0) main.style.paddingRight = (padR + needR) + 'px';
+
+  // — 2) створюємо бокові контейнери
+  const leftGutter = document.createElement('div');
+  leftGutter.className = 'decor-side left';
+  const rightGutter = document.createElement('div');
+  rightGutter.className = 'decor-side right';
+  main.appendChild(leftGutter);
+  main.appendChild(rightGutter);
+
+  // — 3) список SVG-шаблонів (можеш додавати свої)
+  const SVGS = [
+    // круг
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+       <circle cx="50" cy="50" r="50" fill="#FF6B6B" />
+     </svg>`,
+
+    // квадрат з заокругленням
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+       <rect width="100" height="100" rx="12" fill="#4D96FF" />
+     </svg>`,
+
+    // еліпс / хвиля
+    `<svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+       <ellipse cx="60" cy="30" rx="60" ry="30" fill="#3DDC84"/>
+     </svg>`,
+
+    // простий полігон
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+       <polygon points="0,100 50,0 100,100" fill="#FFD166" />
+     </svg>`
+  ];
+
+  // — хелпери
+  const rnd = (min, max) => Math.random() * (max - min) + min;
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+  // — 4) функція створення декора
+  function makeDecor(sideGutter) {
+    const el = document.createElement('div');
+    el.className = 'decor-item';
+
+    // випадковий розмір (макс = GUTTER_PX)
+    const size = Math.round(rnd(SIZE_MIN, SIZE_MAX));
+    el.style.width = size + 'px';
+
+    // позиція по вертикалі у відсотках від висоти main
+    const topPercent = Math.round(rnd(0, 100));
+    el.style.top = topPercent + '%';
+
+    // випадкова прозорість і невелике обертання
+    el.style.opacity = (rnd(0.12, 0.38)).toFixed(2);
+    const rot = Math.round(rnd(-25, 25));
+    el.style.transform = `translateX(-50%) translateY(-50%) rotate(${rot}deg)`;
+
+    // додаємо svg
+    el.innerHTML = pick(SVGS);
+
+    sideGutter.appendChild(el);
+  }
+
+  // — 5) наповнюємо обидва боки
+  for (let i = 0; i < PER_SIDE; i++) {
+    makeDecor(leftGutter);
+    makeDecor(rightGutter);
+  }
+
+  // --- опціонально: оновлюємо позиції при ресайзі (зберегти "хаотичність")
+  // якщо хочеш — розкоментуй:
+  // window.addEventListener('resize', () => {
+  //   // тут можна перерахувати/оновити top% або інші ефекти
+  // });
+})();
+</script>
+
+
+
+
+
+
+
+    <main>
+        
         <section class="hero">
             <div class="hero-content container">
                 <div class="image-or-text-container color-blur-effect">

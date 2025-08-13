@@ -48,13 +48,70 @@
 
 
 
+<style>
+  body {
+    margin: 0;
+    position: relative;
+    background: #111;
+    color: white;
+    font-family: sans-serif;
+  }
 
-
-
+  #decor-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     
+    pointer-events: none; /* щоб не заважало клікам */
+    z-index: -1; /* позаду контенту */
+  }
 
-    <main id="main">
+  #decor-layer svg {
+    position: absolute;
+    fill: #fff; /* колір SVG */
+    opacity: 0.2;
+  }
+</style>
 
+
+<div id="decor-layer"></div>
+
+
+<script>
+  const COUNT = 15; // кількість SVG
+  const layer = document.getElementById('decor-layer');
+
+  // Твій SVG-код (тут приклад кола)
+  const svgCode = `
+  <svg width="40" height="40" viewBox="0 0 40 40"
+       xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="18" />
+  </svg>
+  `;
+
+  for (let i = 0; i < COUNT; i++) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = svgCode;
+    const svg = wrapper.firstElementChild;
+
+    // Розмір
+    const size = 20 + Math.random() * 40;
+    svg.setAttribute('width', size);
+    svg.setAttribute('height', size);
+
+    // Позиції (зліва або справа)
+    svg.style.left = (Math.random() < 0.5
+      ? (Math.random() * 8)               // зліва 0-8%
+      : (92 + Math.random() * 8)) + '%';  // справа 92-100%
+    svg.style.top = Math.random() * document.body.scrollHeight + 'px';
+
+    layer.appendChild(svg);
+  }
+</script>
+
+    <main>
+        
         <section class="hero">
             <div class="hero-content container">
                 <div class="image-or-text-container color-blur-effect">

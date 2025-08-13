@@ -46,15 +46,52 @@
     <!-- Header -->
     <div id="header-placeholder"></div>
 
+    <script>
+  const svgs = [
+    `<svg width="60" height="60"><circle cx="30" cy="30" r="30" fill="#ff6347"/></svg>`,
+    `<svg width="50" height="50"><rect width="50" height="50" fill="#1e90ff" rx="10"/></svg>`,
+    `<svg width="70" height="40"><ellipse cx="35" cy="20" rx="35" ry="20" fill="#32cd32"/></svg>`
+  ];
 
+  const main = document.querySelector('.main-content');
 
+  for (let i = 0; i < 10; i++) {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('decor-svg');
 
+    wrapper.innerHTML = svgs[Math.floor(Math.random() * svgs.length)];
 
+    // Випадкова висота всередині main
+    const top = Math.random() * main.offsetHeight;
+    wrapper.style.position = 'absolute';
+    wrapper.style.top = `${top}px`;
 
-    
+    // Ліва або права сторона
+    if (Math.random() > 0.5) {
+      wrapper.style.left = `${Math.random() * 80}px`; // максимум 80px від лівого краю
+    } else {
+      wrapper.style.right = `${Math.random() * 80}px`; // максимум 80px від правого краю
+    }
 
-    <main id="main">
+    wrapper.style.pointerEvents = 'none';
+    wrapper.style.zIndex = 5;
+    wrapper.style.opacity = 0.3;
 
+    // Додаємо до main
+    main.appendChild(wrapper);
+  }
+</script>
+
+<style>
+  .main-content {
+    position: relative; /* щоб absolute всередині працював */
+    padding: 50px;
+    background-color: #f5f5f5;
+  }
+</style>
+
+    <main class="main-content">
+        
         <section class="hero">
             <div class="hero-content container">
                 <div class="image-or-text-container color-blur-effect">

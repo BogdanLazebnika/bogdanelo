@@ -48,7 +48,6 @@ animatedElements.forEach((el, i) => {
 
 
 window.addEventListener('load', () => { // чекаємо, поки весь контент завантажиться
-    if (window.innerWidth < 600) return;
     const main = document.getElementById('main');
     const SVGS = [
     `<svg width="86" height="86" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">

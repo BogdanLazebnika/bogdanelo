@@ -137,3 +137,12 @@ main{
 * {
   outline: 1px solid rgba(255, 0, 0, 0.3);
 } */
+
+.decor-item svg {
+  width: 100%;        /* займає всю ширину батьківського div (≤80px) */
+  height: auto;       /* пропорційна висота */
+  fill-opacity: 0.6;  /* напівпрозорий */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  /* додатково можна робити обертання */
+  transform-origin: center center;
+}

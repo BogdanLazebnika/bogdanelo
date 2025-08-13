@@ -137,3 +137,21 @@ main{
 * {
   outline: 1px solid rgba(255, 0, 0, 0.3);
 } */
+
+body {
+  margin: 0;
+  position: relative;
+}
+
+#decor-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none; /* щоб не заважало клікам */
+  z-index: -1; /* щоб було позаду контенту */
+}
+
+#decor-layer img {
+  position: absolute;
+}

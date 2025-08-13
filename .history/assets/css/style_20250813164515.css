@@ -137,3 +137,24 @@ main{
 * {
   outline: 1px solid rgba(255, 0, 0, 0.3);
 } */
+
+
+
+.decor-container {
+  position: absolute; /* щоб не рухались зі скролом */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* щоб не заважало клікам */
+  z-index: 0; /* позаду контенту */
+}
+
+.decor {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url('dots.svg'); /* твій SVG з точками */
+  background-size: cover;
+  opacity: 0.2;
+}

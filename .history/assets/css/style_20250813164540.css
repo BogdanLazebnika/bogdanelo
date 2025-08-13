@@ -137,3 +137,16 @@ main{
 * {
   outline: 1px solid rgba(255, 0, 0, 0.3);
 } */
+
+
+
+
+
+.decor {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url('dots.svg'); /* твій SVG з точками */
+  background-size: cover;
+  opacity: 0.2;
+}
