@@ -1,0 +1,22 @@
+.contact-all-content{
+    padding-top: 53px;
+}
+.contact-header-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contact-header{
+    color: var(--nav-active-color);
+    font-size: 32px;
+    font-family: var(--font-primary);
+}
+.contact-header span{
+    color: var(--accent-color);
+}
+.contact-header-description{
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+}

@@ -1,0 +1,221 @@
+
+
+.about-all-content{
+    padding-top: 53px;
+}
+.about-header-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.about-header{
+    color: var(--nav-active-color);
+    font-size: 32px;
+    font-family: var(--font-primary);
+}
+.about-header span{
+    color: var(--accent-color);
+}
+
+.about-header-description{
+    font-size: 16px;
+    font-family: var(--font-primary);
+    color: var(--nav-active-color);
+    margin-top: 14px;
+}
+
+.about-me-description-text{
+    display: inline-flex;
+}
+
+
+
+
+
+
+
+
+/* about-page */
+.about-page__main-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 23px;
+    justify-content: space-between;
+    padding-bottom: 112px;
+}
+
+.about-page__header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.about-page__title {
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--nav-color);
+    font-family: var(--font-primary);
+    min-width: 180px;
+}
+
+.about-page__title span {
+    color: var(--accent-color);
+}
+
+.about-page__line {
+    width: 100%;
+    max-width: 510px;
+    height: 1px;
+    background-color: var(--accent-color);
+}
+
+.about-page__text-and-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 16px;
+    margin-top: 100px;
+}
+
+.about-page__text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 515px;
+    align-items: start;
+}
+
+.about-page__text-block h3 {
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--nav-color);
+    font-family: var(--font-primary);
+}
+
+.about-page__description {
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--nav-color);
+    font-family: var(--font-primary);
+    line-height: 1.8;
+}
+
+.about-page__more-link {
+    text-decoration: none;
+    display: inline-block;
+    gap: 4px;
+    padding: 8px 16px;
+    border: solid 1px var(--accent-color);
+    color: var(--nav-active-color);
+    font-family: var(--font-primary);
+    font-size: 16px;
+}
+
+.about-page__more-link:hover,
+.about-page__more-link:focus {
+    color: var(--nav-color);
+    text-shadow: var(--accent-color) 0 0 1px;
+    border-color: var(--nav-active-color);
+}
+
+.about-page__image-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-page__image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.about-page__divider {
+    width: 70%;
+    border: none;
+    border-bottom: 2px solid var(--accent-color);
+    margin: 0;
+}
+
+.about-page__decor-top-left {
+    position: absolute;
+    top: 59px;
+    left: 0;
+    color: var(--nav-color);
+    width: 4vw;
+    max-width: 84px;
+}
+
+.about-page__decor-bottom-right {
+    position: absolute;
+    bottom: 90px;
+    right: 20px;
+    color: var(--nav-color);
+    width: 4vw;
+    max-width: 84px;
+}
+
+@media screen and (max-width: 800px) {
+    .about-page__main-wrapper {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .about-page__decor-top-left {
+        width: 14vw;
+    }
+
+    .about-page__decor-bottom-right {
+        width: 14vw;
+    }
+}
+
+
+
+
+
+/* skills */
+.skill-section__title{
+    font-size: 32px;
+    font-family: var(--font-primary);
+    color: var(--nav-active-color);
+}
+.skill-section__title span{
+    color: var(--accent-color);
+}
+
+
+.skills-or-list-about-section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.skills-or-item-about-section{
+    border: solid 1px var(--nav-color);
+}
+.skill-name-about-section{
+    padding: 8px;
+    border-bottom: solid 1px var(--nav-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+    color: var(--nav-active-color);
+}
+
+
+.skill-list-names-about-section{
+    padding: 8px;
+    gap: 5px;
+    display: ;
+}
+
+.skill-list-names-about-section span{
+    font-size: 16px;
+    font-family: var(--font-primary);
+    color: var(--nav-color);
+
+}

@@ -1,0 +1,132 @@
+.contact-all-content{
+    padding-top: 53px;
+}
+.contact-header-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contact-header{
+    color: var(--nav-active-color);
+    font-size: 32px;
+    font-family: var(--font-primary);
+}
+.contact-header span{
+    color: var(--accent-color);
+}
+.contact-header-description{
+    margin-top: 14px;
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+}
+
+
+
+
+.contact-all-contact{
+    display: flex;
+    flex-direction: row;
+    margin-top: 46px;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.description-contact-info{
+    max-width: 460px;
+    width: 100%;
+}
+.contact-info-description{
+    font-size: 16px;
+    color: var(--nav-color);
+    line-height: 1.5;
+}
+
+
+.contact-info-container{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: start;
+}
+
+.contact-support-header{
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+}
+.contact-support-me{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    min-width: 230px;
+    max-width: 230px;
+    width: 100%;
+    border: solid 1px var(--nav-color);
+    align-items: start;
+    padding: 16px;
+}
+.contact-support-link a{
+    color: var(--nav-color);
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 16px;
+}
+.contact-support-link a:hover,
+.contact-support-link a:focus{
+    color: var(--accent-color);
+
+}
+
+
+
+.contact-links-list{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.contact-links-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 290px;
+    width: 100%;
+    border: solid 1px var(--nav-color);
+    padding: 16px;
+    
+}
+
+.contact-links-header{
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+}
+.contact-link-item span{
+    overflow: hidden;          /* ховаємо зайве */
+    white-space: nowrap;       /* не переносимо рядок */
+    text-overflow: ellipsis;   /* додаємо три крапки */
+    display: inline-block;  
+}
+.contact-link-item a{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 8px;
+    color: var(--nav-color);
+    text-decoration: none;
+}
+.contact-link-item a:hover,
+.contact-link-item a:focus{
+    color: var(--accent-color);
+}
+
+.contact-link-item a svg{
+    min-width: 24px;
+    width: 24px;
+    height: auto;
+}

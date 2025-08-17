@@ -1,0 +1,9 @@
+.about-header-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.about-header{
+    color: var();
+}

@@ -1,0 +1,112 @@
+.contact-all-content{
+    padding-top: 53px;
+}
+.contact-header-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contact-header{
+    color: var(--nav-active-color);
+    font-size: 32px;
+    font-family: var(--font-primary);
+}
+.contact-header span{
+    color: var(--accent-color);
+}
+.contact-header-description{
+    margin-top: 14px;
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+}
+
+
+
+
+.contact-all-contact{
+    display: flex;
+    flex-direction: row;
+    margin-top: 46px;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.description-contact-info{
+    max-width: 500px;
+    width: 100%;
+}
+.contact-info-description{
+    font-size: 16px;
+    color: var(--nav-color);
+    line-height: 1.5;
+}
+
+
+.contact-info-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: start;
+    width: 100%;
+}
+
+.contact-support-header{
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+}
+.contact-support-me{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    max-width: 230px;
+    width: 100%;
+    border: solid 1px var(--nav-color);
+    align-items: start;
+    padding: 16px;
+}
+.contact-support-link a{
+    color: var(--nav-color);
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 16px;
+}
+.contact-support-link a:hover,
+.contact-support-link a:focus{
+    color: var(--accent-color);
+
+}
+
+
+
+
+
+.contact-links-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 240px;
+    width: 100%;
+    border: solid 1px var(--nav-color);
+    padding: 16px;
+}
+
+.contact-links-header{
+    color: var(--nav-active-color);
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+}
+.contact-links-list{
+
+}
+.contact-link-item a{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}

@@ -1,0 +1,13 @@
+
+
+
+/* Projects Section */
+.projects-header-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.projects-header{
+    color: var(--nav-active-color);
+    font-family: var(--tr);
+}
