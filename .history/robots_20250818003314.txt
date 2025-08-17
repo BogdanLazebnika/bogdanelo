@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bogdanlazebnika.github.io/bogdanelo/sitemap.xml
