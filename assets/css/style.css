@@ -137,3 +137,84 @@ main{
 * {
   outline: 1px solid rgba(255, 0, 0, 0.3);
 } */
+
+
+
+
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* Модальне вікно */
+.image-modal {
+  display: none; /* приховано */
+  position: fixed;
+  z-index: 1000;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.85);
+}
+
+/* Фото всередині модалки */
+.image-modal img {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  animation: zoomIn 0.3s ease;
+}
+
+/* Кнопка закриття */
+.image-modal .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.image-modal .close:hover {
+  color: #ccc;
+}
+
+/* Анімація появи */
+@keyframes zoomIn {
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+
+/* Адаптація під телефон */
+@media (max-width: 600px) {
+  .gallery img {
+    max-width: 100%;
+  }
+  .image-modal img {
+    max-width: 95%;
+    max-height: 75vh;
+  }
+}

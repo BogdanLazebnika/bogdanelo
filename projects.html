@@ -22,9 +22,6 @@
     <link rel="stylesheet" href="./assets/css/reset.css">
     
     
-    <script src="./assets/js/components.js"></script>
-    <script src="./assets/js/main.js"></script>
-    
     
     
     <!-- Link to style.css -->
@@ -91,7 +88,7 @@
                         <ul class="projects-list">
                             <!-- Проєкт 1 -->
                             <li class="project-item animate-from-left" role="article" aria-labelledby="proj-chertnodes">
-                                <figure class="thumb"><img src="./assets/img/projects/project-one.jpg" alt="Знімок головної сторінки сайту Барбершоп"></figure>
+                                <figure class="thumb"><img src="./assets/img/projects/project-one.jpg" alt="Знімок головної сторінки сайту Барбершоп" class="zoomable"></figure>
                                 
                                 <div class="tech-stack">
                                     <span>HTML</span>
@@ -115,9 +112,10 @@
                                 </div>
                             </li>
 
+
                             <!-- Проєкт 2 -->
                             <li class="project-item animate-from-bottom" role="article" aria-labelledby="proj-chertnodes">
-                                <figure class="thumb"><img src="./assets/img/projects/project-two.png" alt="Знімок головної сторінки сайту Барбершоп"></figure>
+                                <figure class="thumb"><img src="./assets/img/projects/project-two.png" alt="Знімок головної сторінки сайту Figmalend" class="zoomable"></figure>
                                 
                                 <div class="tech-stack">
                                     <span>HTML</span>
@@ -470,7 +468,15 @@
 
     <div id="footer-placeholder"></div>
 
+
+     <div class="image-modal" id="imageModal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
     <script src="./assets/js/index.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/components.js"></script>
 
 
     
