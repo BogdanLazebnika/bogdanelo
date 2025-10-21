@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Змійка Deluxe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="settings">
+    <label>Колір змійки: <input type="color" id="snakeColor" /></label>
+    <label>Колір фону: <input type="color" id="bgColor" /></label>
+    <label>Тип поля:
+      <select id="themeSelect">
+        <option value="classic">Класика</option>
+        <option value="dark">Темна</option>
+        <option value="retro">Ретро</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="scoreboard">
+    <span>Очки: <span id="score">0</span></span>
+    <span>Рекорд: <span id="highscore">0</span></span>
+  </div>
+
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+<style>
+    body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+canvas {
+  border: 2px solid #333;
+  background-color: #fff;
+}
+
+.settings {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.scoreboard {
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: flex;
+  gap: 20px;
+}
+
+body.dark {
+  background-color: #111;
+  color: #eee;
+}
+
+body.retro {
+  background-color: #fdf6e3;
+  color: #333;
+}
+
+canvas.retro {
+  border: 4px dashed #333;
+}
+
+</style>
+
+
+<script>
+    

@@ -1,0 +1,36 @@
+<div class="box">
+  <div class="sticky-title">Назва секції</div>
+  <div class="content">
+    <!-- Багато тексту для скролу -->
+    <p>Рядок 1</p>
+    <p style="height: 1000px">Рядок 2</p>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam velit repellat ad? Blanditiis iste soluta, beatae nesciunt illo at quo aspernatur aut ex dolores expedita, odio maiores sequi, eaque deleniti! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis numquam, deleniti corporis facilis repellendus molestiae delectus magni eos architecto quas sint error aut obcaecati qui pariatur porro rem provident laudantium! Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sapiente nam quibusdam adipisci nostrum asperiores fugiat natus ad itaque nihil eos tempora voluptate officiis, maxime eveniet laudantium delectus autem suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae, ut ab dicta, odit similique ullam quo perspiciatis corrupti fugit accusantium, aliquam voluptas rerum quod magnam numquam nihil earum dolorem! Velit.</p>
+  </div>
+</div>
+
+<div>
+    <p>Рядок 3</p>
+</div>
+
+
+<style>
+    .box {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  position: relative; /* Обов'язково для sticky! */
+}
+
+.sticky-title {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px;
+  z-index: 10;
+  border-bottom: 1px solid #ddd;
+}
+
+.content {
+  padding: 10px;
+}
+</style>

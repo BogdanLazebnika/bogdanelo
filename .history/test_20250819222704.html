@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Змійка Deluxe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="settings">
+    <label>Колір змійки: <input type="color" id="snakeColor" /></label>
+    <label>Колір фону: <input type="color" id="bgColor" /></label>
+    <label>Тип поля:
+      <select id="themeSelect">
+        <option value="classic">Класика</option>
+        <option value="dark">Темна</option>
+        <option value="retro">Ретро</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="scoreboard">
+    <span>Очки: <span id="score">0</span></span>
+    <span>Рекорд: <span id="highscore">0</span></span>
+  </div>
+
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+<style>
+    body {
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+canvas {
+  border: 2px solid #333;
+  background-color: #fff;
+}
+
+.settings {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.scoreboard {
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: flex;
+  gap: 20px;
+}
+
+body.dark {
+  background-color: #111;
+  color: #eee;
+}
+
+body.retro {
+  background-color: #fdf6e3;
+  color: #333;
+}
+
+canvas.retro {
+  border: 4px dashed #333;
+}
+
+</style>
+
+
+<script>
+    const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+const highscoreEl = document.getElementById("highscore");
+const snakeColorInput = document.getElementById("snakeColor");
+const bgColorInput = document.getElementById("bgColor");
+const themeSelect = document.getElementById("themeSelect");
+
+let snake = [{ x: 10, y: 10 }];
+let direction = { x: 0, y: 0 };
+let food = { x: 5, y: 5 };
+let score = 0;
+let highscore = localStorage.getItem("snakeHighscore") || 0;
+highscoreEl.textContent = highscore;
+
+const gridSize = 20;
+const tileCount = canvas.width / gridSize;
+
+function drawGame() {
+  ctx.fillStyle = bgColorInput.value || "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw food
+  ctx.fillStyle = "#e74c3c";
+  ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+
+  // Move snake
+  const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+  snake.unshift(head);
+
+  // Eat food
+  if (head.x === food.x && head.y === food.y) {
+    score++;
+    scoreEl.textContent = score;
+    food = {
+      x: Math.floor(Math.random() * tileCount),
+      y: Math.floor(Math.random() * tileCount),
+    };
+  } else {
+    snake.pop();
+  }
+
+  // Collision
+  if (
+    head.x < 0 || head.x >= tileCount ||
+    head.y < 0 || head.y >= tileCount ||
+    snake.slice(1).some(s => s.x === head.x && s.y === head.y)
+  ) {
+    if (score > highscore) {
+      localStorage.setItem("snakeHighscore", score);
+    }
+    resetGame();
+    return;
+  }
+
+  // Draw snake
+  ctx.fillStyle = snakeColorInput.value || "#2ecc71";
+  snake.forEach(part => {
+    ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize, gridSize);
+  });
+
+  setTimeout(drawGame, 100);
+}
+
+function resetGame() {
+  snake = [{ x: 10, y: 10 }];
+  direction = { x: 0, y: 0 };
+  score = 0;
+  scoreEl.textContent = score;
+  highscore = localStorage.getItem("snakeHighscore") || 0;
+  highscoreEl.textContent = highscore;
+}
+
+document.addEventListener("keydown", e => {
+  switch (e.key) {
+    case "ArrowUp": direction = { x: 0, y: -1 }; break;
+    case "ArrowDown": direction = { x: 0, y: 1 }; break;
+    case "ArrowLeft": direction = { x: -1, y: 0 }; break;
+    case "ArrowRight": direction = { x: 1, y: 0 }; break;
+  }
+});
+
+themeSelect.addEventListener("change", () => {
+  document.body.className = themeSelect.value;
+  canvas.className = themeSelect.value;
+});
+
+drawGame();
+<

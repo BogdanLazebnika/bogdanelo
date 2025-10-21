@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Клікер на час</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    #clickButton {
+      padding: 20px 40px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    #startButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+    .info {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Клікер: натискай якнайбільше!</h1>
+  <p class="info">Час: <span id="time">10</span> с</p>
+  <p class="info">Кліків: <span id="score">0</span></p>
+  <button id="clickButton" disabled>Натискай!</button>
+  <button id="startButton">Почати гру</button>
+
+  <script>
+    const timeDisplay = document.getElementById("time");
+    const scoreDisplay = document.getElementById("score");
+    const clickButton = document.getElementById("clickButton");
+    const startButton = document.getElementById("startButton");
+
+    let timeLeft = 10;
+    let score = 0;
+    let timer;
+
+    function updateTime() {
+      timeLeft--;
+      timeDisplay.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        clickButton.disabled = true;
+        startButton.disabled = false;
+        alert("Час вийшов! Твій результат: " + score + " кліків");
+      }
+    }
+
+    clickButton.addEventListener("click", () => {
+      score++;
+      scoreDisplay.textContent = score;
+    });
+
+    startButton.addEventListener("click", () => {
+      score = 0;
+      timeLeft = 10;
+      scoreDisplay.textContent = score;
+      timeDisplay.textContent = timeLeft;
+      clickButton.disabled = false;
+      startButton.disabled = true;
+      timer = setInterval(updateTime, 1000);
+    });
+  </script>
+</body>
+</html>

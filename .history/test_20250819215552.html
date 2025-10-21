@@ -1,0 +1,52 @@
+<div class="spacer">Перед контейнером</div>
+
+<div class="container" id="container">
+  <div class="fixed-title" id="title">Назва блоку</div>
+  <div class="content">
+    <p>Контент 1</p>
+    <p>Контент 2</p>
+    <p>Контент 3</p>
+    <p>...</p>
+  </div>
+</div>
+
+<div class="spacer">Після контейнера</div>
+
+
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.spacer {
+  height: 100vh;
+  background: #f0f0f0;
+}
+
+.container {
+  position: relative;
+  min-height: 400px;
+  background: #e0f7fa;
+  padding-top: 40px;
+}
+
+.fixed-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #00bcd4;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.fixed-title.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+</style>

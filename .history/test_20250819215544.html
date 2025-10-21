@@ -1,0 +1,37 @@
+<div class="spacer">Перед контейнером</div>
+
+<div class="container" id="container">
+  <div class="fixed-title" id="title">Назва блоку</div>
+  <div class="content">
+    <p>Контент 1</p>
+    <p>Контент 2</p>
+    <p>Контент 3</p>
+    <p>...</p>
+  </div>
+</div>
+
+<div class="spacer">Після контейнера</div>
+
+
+
+<style>
+    .box {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  position: relative; /* Обов'язково для sticky! */
+}
+
+.sticky-title {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px;
+  z-index: 10;
+  border-bottom: 1px solid #ddd;
+}
+
+.content {
+  padding: 10px;
+}
+</style>

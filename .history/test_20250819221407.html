@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Гра — Клікер</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+    button { font-size: 24px; padding: 20px 40px; }
+  </style>
+</head>
+<body>
+  <h1>Натискай!</h1>
+  <p>Очки: <span id="score">0</span></p>
+  <button onclick="addScore()">+1</button>
+
+  <script>
+    let score = 0;
+    function addScore() {
+      score++;
+      document.getElementById("score").textContent = score;
+    }
+  </script>
+</body>
+</html>

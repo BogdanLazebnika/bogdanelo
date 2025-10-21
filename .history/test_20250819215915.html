@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Sticky всередині контейнера</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    .spacer {
+      height: 100vh;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #666;
+    }
+
+    .section {
+      position: relative;
+      background: #cceeff;
+      margin: 100px 0;
+      padding: 60px 20px 20px 20px;
+      height: 600px;
+    }
+
+    .section-title {
+      position: sticky;
+      top: 0;
+      background: #007acc;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="spacer">⬇ Прокрути вниз</div>
+
+  <div class="section">
+    <div class="section-title">Фіксований заголовок</div>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+    <p>Контент...</p>
+  </div>
+
+  <div class="spacer">⬆ Прокрути вгору</div>
+
+</body>
+</html>

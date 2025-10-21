@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Snake | Покращена Версія</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --snake: var(--primary);
+            --food: var(--danger);
+            --special-food: #8b5cf6;
+            --obstacle: #64748b;
+        }
+
+        .dark-mode {
+            --primary: #60a5fa;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --danger: #f87171;
+            --dark: #f8fafc;
+            --light: #1e293b;
+            --snake: var(--primary);
+            --food: var(--danger);
+            --obstacle: #94a3b8;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            transition: all 0.3s;
+        }
+
+        .snake-cell {
+            background-color: var(--snake);
+            border-radius: 4px;
+        }
+
+        .snake-head {
+            background-color: var(--snake);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .snake-head::after {
+            content: '';
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            background-color: white;
+            border-radius: 50%;
+            top: 25%;
+            left: 25%;
+        }
+
+        .food-cell {
+            background-color: var(--food);
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        .special-food-cell {
+            background-color: var(--special-food);
+            border-radius: 30%;
+            animation: rotate 3s infinite linear, pulse 1.5s infinite;
+        }
+
+        .obstacle-cell {
+            background-color: var(--obstacle);
+            border-radius: 2px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(0.95); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cell-hover:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .mode-transition {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .start-screen {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center mode-transition">
+    <!-- Шапка -->
+    <header class="w-full py-6 px-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Mega Snake</h1>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <button id="soundToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <svg xmlns="http://www3.org/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M12 6a7.975 7.975 0 015.657 2.343m0 0L12 12m5.657-5.657L12 12" />
+                </svg>
+            </button>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Основний контент -->
+    <main class="flex-1 w-full max-w-6xl px-4 pb-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Ігрова зона -->
+        <div class="lg:col-span-2 flex flex-col items-center">
+            <!-- Контейнер гри -->
+            <div class="relative w-full aspect-square max-w-2xl rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
+                <!-- Ігрове поле -->
+                <div id="gameGrid" class="w-full h-full grid bg-white dark:bg-gray-800"></div>
+                
+                <!-- Стартовий екран -->
+                <div id="startScreen" class="start-screen absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center">
+                    <div class="mb-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <h2 class="text-4xl font-bold mt-4">Mega Snake</h2>
+                        <p class="mt-2 text-gray-300">Класична гра в новому виконанні</p>
+                    </div>
+                    
+                    <button id="startGameBtn" class="px-8 py-3 bg-primary hover:bg-primary-dark rounded-full font-bold text-white transition-all transform hover:scale-105 shadow-lg">
+                        Почати гру
+                    </button>
+                    
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold">Керування:</h3>
+                        <div class="mt-2 flex items-center justify-center space-x-4">
+                            <kbd class="px-3 py-1 bg-gray-700 rounded-md">←</kbd>
+                            <kbd class="px-3 py-1 bg-gray-700 rounded-md">↑</kbd>
+                            <kbd class="px-3 py-1 bg-gray-700 rounded-md">↓</kbd>
+                            <kbd class="px-3 py-1 bg-gray-700 rounded-md">→</kbd>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Екран паузи -->
+                <div id="pauseScreen" class="start-screen absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center hidden">
+                    <h2 class="text-4xl font-bold">Пауза</h2>
+                    <p class="mt-2 text-gray-300">Гра на паузі</p>
+                    <button id="resumeBtn" class="mt-6 px-8 py-3 bg-primary hover:bg-primary-dark rounded-full font-bold text-white transition-all transform hover:scale-105 shadow-lg">
+                        Продовжити
+                    </button>
+                </div>
+                
+                <!-- Екран завершення гри -->
+                <div id="gameOverScreen" class="start-screen absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center hidden">
+                    <h2 class="text-4xl font-bold">Гра завершена!</h2>
+                    <p id="finalScoreText" class="mt-4 text-2xl">Ваш рахунок: <span class="font-bold">0</span></p>
+                    
+                    <div class="mt-6 flex space-x-4">
+                        <button id="restartBtn" class="px-6 py-2 bg-primary hover:bg-primary-dark rounded-full font-bold text-white transition-all transform hover:scale-105 shadow">
+                            Грати ще
+                        </button>
+                        <button id="newGameBtn" class="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-full font-bold text-white transition-all transform hover:scale-105 shadow">
+                            Нова гра
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Мобільне керування -->
+            <div id="mobileControls" class="mt-8 grid grid-cols-3 gap-3 max-w-xs lg:hidden">
+                <div class="col-span-3 flex justify-center">
+                    <button id="upBtn" class="p-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                        ↑
+                    </button>
+                </div>
+                <div class="flex justify-between col-span-3">
+                    <button id="leftBtn" class="p-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                        ←
+                    </button>
+                    <button id="downBtn" class="p-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                        ↓
+                    </button>
+                    <button id="rightBtn" class="p-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                        →
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Інформаційна панель -->
+        <div class="flex flex-col space-y-6">
+            <!-- Поточний рахунок -->
+            <div class="glass-effect p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold mb-4">Статистика гри</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span>Поточний рахунок:</span>
+                        <span id="currentScore" class="font-bold text-xl">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Рекорд:</span>
+                        <span id="highScore" class="font-bold text-xl">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Рівень:</span>
+                        <span id="currentLevel" class="font-bold text-xl">1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Налаштування -->
+            <div class="glass-effect p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold mb-4">Налаштування</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="difficultySelect" class="block mb-2">Складність:</label>
+                        <select id="difficultySelect" class="w-full p-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md">
+                            <option value="easy">Легка (15×15)</option>
+                            <option value="normal" selected>Нормальна (20×20)</option>
+                            <option value="hard">Важка (25×25)</option>
+                            <option value="extreme">Екстремальна (30×30)</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="speedSelect" class="block mb-2">Швидкість:</label>
+                        <select id="speedSelect" class="w-full p-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md">
+                            <option value="slow">Повільна</option>
+                            <option value="normal" selected>Нормальна</option>
+                            <option value="fast">Швидка</option>
+                            <option value="insane">Божевільна</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="snakeColor" class="block mb-2">Колір змійки:</label>
+                        <div class="flex space-x-2">
+                            <input type="color" id="snakeColor" value="#3b82f6" class="flex-1 h-10">
+                            <button id="randomSnakeColor" class="p-2 bg-gray-200 dark:bg-gray-700 rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Таблиця рекордів -->
+            <div class="glass-effect p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold mb-4">Таблиця рекордів</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead>
+                            <tr>
+                                <th class="px-2 py-2 text-left text-xs font-medium uppercase">#</th>
+                                <th class="px-2 py-2 text-left text-xs font-medium uppercase">Гравець</th>
+                                <th class="px-2 py-2 text-left text-xs font-medium uppercase">Рахунок</th>
+                                <th class="px-2 py-2 text-left text-xs font-medium uppercase">Складність</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Тут будуть записи про рекорди -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Підвал -->
+    <footer class="w-full py-6 px-4 text-center text-sm text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+        © 2023 Mega Snake. Всі права захищені.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Налаштування гри
+            const settings = {
+                difficulties: {
+                    easy: { size: 15, speed: 150, name: 'Легка' },
+                    normal: { size: 20, speed: 100, name: 'Нормальна' },
+                    hard: { size: 25, speed: 70, name: 'Важка' },
+                    extreme: { size: 30, speed: 40, name: 'Екстремальна' }
+                },
+                speeds: {
+                    slow: { value: 150, name: 'Повільна' },
+                    normal: { value: 100, name: 'Нормальна' },
+                    fast: { value: 70, name: 'Швидка' },
+                    insane: { value: 40, name: 'Божевільна' }
+                }
+            };
+
+            // Стан гри
+            let gameState = {
+                snake: [],
+                food: null,
+                specialFood: null,
+                obstacles: [],
+                direction: 'right',
+                nextDirection: 'right',
+                score: 0,
+                highScore: localStorage.getItem('snakeHighScore') || 0,
+                level: 1,
+                gameInterval: null,
+                isRunning: false,
+                isPaused: false,
+                gridSize: 20,
+                gameSpeed: 100,
+                difficulty: 'normal',
+                speed: 'normal',
+                lastSpecialFoodTime: 0,
+                SPECIAL_FOOD_INTERVAL: 15000,
+                snakeColor: '#3b82f6'
+            };
+
+            // Елементи DOM
+            const elements = {
+                gameGrid: document.getElementById('gameGrid'),
+                startScreen: document.getElementById('startScreen'),
+                pauseScreen: document.getElementById('pauseScreen'),
+                gameOverScreen: document.getElementById('gameOverScreen'),
+                startGameBtn: document.getElementById('startGameBtn'),
+                resumeBtn: document.getElementById('resumeBtn'),
+                restartBtn: document.getElementById('restartBtn'),
+                newGameBtn: document.getElementById('newGameBtn'),
+                currentScore: document.getElementById('currentScore'),
+                highScore: document.getElementById('highScore'),
+                currentLevel: document.getElementById('currentLevel'),
+                finalScoreText: document.getElementById('finalScoreText'),
+                difficultySelect: document.getElementById('difficultySelect'),
+                speedSelect: document.getElementById('speedSelect'),
+                snakeColor: document.getElementById('snakeColor'),
+                randomSnakeColor: document.getElementById('randomSnakeColor'),
+                leaderboardBody: document.getElementById('leaderboardBody'),
+                themeToggle: document.getElementById('themeToggle'),
+                soundToggle: document.getElementById('soundToggle'),
+                upBtn: document.getElementById('upBtn'),
+                downBtn: document.getElementById('downBtn'),
+                leftBtn: document.getElementById('leftBtn'),
+                rightBtn: document.getElementById('rightBtn')
+            };
+
+            // Ініціалізація гри
+            initGame();
+            
+            // Ініціалізація
+            function initGame() {
+                loadSettings();
+                loadLeaderboard();
+                createGrid();
+                setupEventListeners();
+                updateUI();
+            }
+            
+            // Завантаження налаштувань
+            function loadSettings() {
+                const savedSettings = JSON.parse(localStorage.getItem('snakeSettings')) || {};
+                
+                if (savedSettings.difficulty) {
+                    gameState.difficulty = savedSettings.difficulty;
+                    elements.difficultySelect.value = gameState.difficulty;
+                    updateDifficulty();
+                }
+                
+                if (savedSettings.speed) {
+                    gameState.speed = savedSettings.speed;
+                    elements.speedSelect.value = gameState.speed;
+                    updateSpeed();
+                }
+                
+                if (savedSettings.snakeColor) {
+                    gameState.snakeColor = savedSettings.snakeColor;
+                    elements.snakeColor.value = gameState.snakeColor;
+                }
+                
+                // Завантаження теми
+                const savedTheme = localStorage.getItem('snakeTheme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+            }
+            
+            // Оновлення складності
+            function updateDifficulty() {
+                const difficulty = settings.difficulties[gameState.difficulty];
+                gameState.gridSize = difficulty.size;
+                gameState.gameSpeed = difficulty.speed;
+            }
+            
+            // Оновлення швидкості
+            function updateSpeed() {
+                gameState.gameSpeed = settings.speeds[gameState.speed].value;
+            }
+            
+            // Збереження налаштувань
+            function saveSettings() {
+                localStorage.setItem('snakeSettings', JSON.stringify({
+                    difficulty: gameState.difficulty,
+                    speed: gameState.speed,
+                    snakeColor: gameState.snakeColor
+                }));
+            }
+            
+            // Створення сітки
+            function createGrid() {
+                elements.gameGrid.innerHTML = '';
+                elements.gameGrid.style.gridTemplateColumns = `repeat(${gameState.gridSize}, 1fr)`;
+                elements.gameGrid.style.gridTemplateRows = `repeat(${gameState.gridSize}, 1fr)`;
+                
+                for (let i = 0; i < gameState.gridSize * gameState.gridSize; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell-hover';
+                    cell.dataset.index = i;
+                    elements.gameGrid.appendChild(cell);
+                }
+            }
+            
+            // Початок гри
+            function startGame() {
+                resetGame();
+                gameState.isRunning = true;
+                elements.startScreen.classList.add('hidden');
+                gameState.lastSpecialFoodTime = Date.now();
+                gameState.gameInterval = setInterval(gameLoop, gameState.gameSpeed);
+            }
+            
+            // Перезапуск гри
+            function resetGame() {
+                clearInterval(gameState.gameInterval);
+                
+                gameState.snake = [];
+                gameState.food = null;
+                gameState.specialFood = null;
+                gameState.obstacles = [];
+                gameState.direction = 'right';
+                gameState.nextDirection = 'right';
+                gameState.score = 0;
+                gameState.level = 1;
+                gameState.isRunning = false;
+                gameState.isPaused = false;
+                
+                // Створення змійки
+                const startLength = 3;
+                const startPos = Math.floor(gameState.gridSize / 3);
+                
+                for (let i = 0; i < startLength; i++) {
+                    gameState.snake.push({ x: startPos - i, y: startPos });
+                }
+                
+                // Генерація їжі та перешкод
+                generateFood();
+                generateObstacles();
+                
+                // Оновлення UI
+                updateUI();
+                render();
+            }
+            
+            // Ігровий цикл
+            function gameLoop() {
+                if (gameState.isPaused) return;
+                
+                update();
+                
+                if (checkCollision()) {
+                    gameOver();
+                    return;
+                }
+                
+                render();
+                checkSpecialFood();
+            }
+            
+            // Оновлення стану гри
+            function update() {
+                gameState.direction = gameState.nextDirection;
+                const head = { ...gameState.snake[0] };
+                
+                switch (gameState.direction) {
+                    case 'up': head.y--; break;
+                    case 'down': head.y++; break;
+                    case 'left': head.x--; break;
+                    case 'right': head.x++; break;
+                }
+                
+                gameState.snake.unshift(head);
+                
+                // Перевірка зіткнення з їжею
+                if (head.x === gameState.food.x && head.y === gameState.food.y) {
+                    gameState.score += 10;
+                    if (gameState.score > gameState.highScore) {
+                        gameState.highScore = gameState.score;
+                        localStorage.setItem('snakeHighScore', gameState.highScore);
+                    }
+                    
+                    if (gameState.score % 50 === 0) {
+                        gameState.level++;
+                        generateObstacles();
+                    }
+                    
+                    generateFood();
+                } else if (gameState.specialFood && head.x === gameState.specialFood.x && head.y === gameState.specialFood.y) {
+                    gameState.score += 30;
+                    if (gameState.score > gameState.highScore) {
+                        gameState.highScore = gameState.score;
+                        localStorage.setItem('snakeHighScore', gameState.highScore);
+                    }
+                    
+                    gameState.specialFood = null;
+                    
+                    if (gameState.score % 50 === 0) {
+                        gameState.level++;
+                        generateObstacles();
+                    }
+                } else {
+                    gameState.snake.pop();
+                }
+                
+                updateUI();
+            }
+            
+            // Перевірка зіткнень
+            function checkCollision() {
+                const head = gameState.snake[0];
+                
+                // Зіткнення зі стіною
+                if (head.x < 0 || head.x >= gameState.gridSize || head.y < 0 || head.y >= gameState.gridSize) {
+                    return true;
+                }
+                
+                // Зіткнення з собою
+                for (let i = 1; i < gameState.snake.length; i++) {
+                    if (head.x === gameState.snake[i].x && head.y === gameState.snake[i].y) {
+                        return true;
+                    }
+                }
+                
+                // Зіткнення з перешкодою
+                for (const obstacle of gameState.obstacles) {
+                    if (head.x === obstacle.x && head.y === obstacle.y) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            // Перевірка спеціальної їжі
+            function checkSpecialFood() {
+                const currentTime = Date.now();
+                if (!gameState.specialFood && (currentTime - gameState.lastSpecialFoodTime) > gameState.SPECIAL_FOOD_INTERVAL) {
+                    generateSpecialFood();
+                    gameState.lastSpecialFoodTime = currentTime;
+                }
+            }
+            
+            // Генерація їжі
+            function generateFood() {
+                let newFood;
+                
+                do {
+                    newFood = {
+                        x: Math.floor(Math.random() * gameState.gridSize),
+                        y: Math.floor(Math.random() * gameState.gridSize)
+                    };
+                } while (isPositionOccupied(newFood));
+                
+                gameState.food = newFood;
+            }
+            
+            // Генерація спеціальної їжі
+            function generateSpecialFood() {
+                let newFood;
+                
+                do {
+                    newFood = {
+                        x: Math.floor(Math.random() * gameState.gridSize),
+                        y: Math.floor(Math.random() * gameState.gridSize)
+                    };
+                } while (isPositionOccupied(newFood));
+                
+                gameState.specialFood = newFood;
+            }
+            
+            // Генерація перешкод
+            function generateObstacles() {
+                gameState.obstacles = [];
+                const obstacleCount = Math.floor(gameState.level * 1.5);
+                
+                for (let i = 0; i < obstacleCount; i++) {
+                    let obstacle;
+                    
+                    do {
+                        obstacle = {
+                            x: Math.floor(Math.random() * gameState.gridSize),
+                            y: Math.floor(Math.random() * gameState.gridSize)
+                        };
+                    } while (isPositionOccupied(obstacle));
+                    
+                    gameState.obstacles.push(obstacle);
+                }
+            }
+            
+            // Перевірка зайнятої позиції
+            function isPositionOccupied(pos) {
+                // Перевірка змійки
+                for (const segment of gameState.snake) {
+                    if (segment.x === pos.x && segment.y === pos.y) {
+                        return true;
+                    }
+                }
+                
+                // Перевірка їжі
+                if (gameState.food && gameState.food.x === pos.x && gameState.food.y === pos.y) {
+                    return true;
+                }
+                
+                // Перевірка спеціальної їжі
+                if (gameState.specialFood && gameState.specialFood.x === pos.x && gameState.specialFood.y === pos.y) {
+                    return true;
+                }
+                
+                // Перевірка перешкод
+                for (const obstacle of gameState.obstacles) {
+                    if (obstacle.x === pos.x && obstacle.y === pos.y) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            // Візуалізація гри
+            function render() {
+                // Очищення сітки
+                const cells = document.querySelectorAll('#gameGrid > div');
+                cells.forEach(cell => {
+                    cell.className = 'cell-hover';
+                    cell.style.backgroundColor = '';
+                });
+                
+                // Малювання змійки
+                gameState.snake.forEach((segment, index) => {
+                    const cell = getCellAtPosition(segment.x, segment.y);
+                    if (cell) {
+                        if (index === 0) {
+                            cell.classList.add('snake-head');
+                        } else {
+                            cell.classList.add('snake-cell');
+                        }
+                        cell.style.backgroundColor = gameState.snakeColor;
+                    }
+                });
+                
+                // Малювання їжі
+                if (gameState.food) {
+                    const cell = getCellAtPosition(gameState.food.x, gameState.food.y);
+                    if (cell) {
+                        cell.classList.add('food-cell');
+                    }
+                }
+                
+                // Малювання спеціальної їжі
+                if (gameState.specialFood) {
+                    const cell = getCellAtPosition(gameState.specialFood.x, gameState.specialFood.y);
+                    if (cell) {
+                        cell.classList.add('special-food-cell');
+                    }
+                }
+                
+                // Малювання перешкод
+                gameState.obstacles.forEach(obstacle => {
+                    const cell = getCellAtPosition(obstacle.x, obstacle.y);
+                    if (cell) {
+                        cell.classList.add('obstacle-cell');
+                    }
+                });
+            }
+            
+            // Отримання комірки за координатами
+            function getCellAtPosition(x, y) {
+                const index = y * gameState.gridSize + x;
+                return document.querySelector(`#gameGrid > div[data-index="${index}"]`);
+            }
+            
+            // Зміна напрямку
+            function changeDirection(e) {
+                if (gameState.isPaused || !gameState.isRunning) return;
+                
+                const key = e.key || e.target.id.replace('Btn', '');
+                
+                // Заборона зворотного руху
+                if (
+                    (key === 'ArrowUp' || key === 'up') && gameState.direction !== 'down' ||
+                    (key === 'ArrowDown' || key === 'down') && gameState.direction !== 'up' ||
+                    (key === 'ArrowLeft' || key === 'left') && gameState.direction !== 'right' ||
+                    (key === 'ArrowRight' || key === 'right') && gameState.direction !== 'left'
+                ) {
+                    gameState.nextDirection = 
+                        key === 'ArrowUp' || key === 'up' ? 'up' :
+                        key === 'ArrowDown' || key === 'down' ? 'down' :
+                        key === 'ArrowLeft' || key === 'left' ? 'left' : 'right';
+                }
+            }
+            
+            // Завершення гри
+            function gameOver() {
+                clearInterval(gameState.gameInterval);
+                gameState.isRunning = false;
+                
+                // Оновлення таблиці рекордів
+                if (gameState.score > 0) {
+                    addToLeaderboard(gameState.score);
+                }
+                
+                // Показати екран завершення гри
+                elements.finalScoreText.innerHTML = `Ваш рахунок: <span class="text-primary">${gameState.score}</span>`;
+                elements.gameOverScreen.classList.remove('hidden');
+            }
+            
+            // Пауза гри
+            function togglePause() {
+                if (!gameState.isRunning) return;
+                
+                gameState.isPaused = !gameState.isPaused;
+                
+                if (gameState.isPaused) {
+                    clearInterval(gameState.gameInterval);
+                    elements.pauseScreen.classList.remove('hidden');
+                } else {
+                    gameState.gameInterval = setInterval(gameLoop, gameState.gameSpeed);
+                    elements.pauseScreen.classList.add('hidden');
+                }
+            }
+            
+            // Оновлення інтерфейсу
+            function updateUI() {
+                elements.currentScore.textContent = gameState.score;
+                elements.highScore.textContent = gameState.highScore;
+                elements.currentLevel.textContent = gameState.level;
+            }
+            
+            // Завантаження таблиці рекордів
+            function loadLeaderboard() {
+                const leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard')) || [];
+                elements.leaderboardBody.innerHTML = '';
+                
+                leaderboard
+                    .sort((a, b) => b.score - a.score)
+                    .slice(0, 10)
+                    .forEach((entry, index) => {
+                        const row = document.createElement('tr');
+                        row.className = 'hover:bg-gray-100 dark:hover:bg-gray-800';
+                        
+                        row.innerHTML = `
+                            <td class="px-2 py-2">${index + 1}</td>
+                            <td class="px-2 py-2">${entry.name || 'Гравець'}</td>
+                            <td class="px-2 py-2 font-bold">${entry.score}</td>
+                            <td class="px-2 py-2 text-sm">${entry.difficulty || 'Нормальна'}</td>
+                        `;
+                        
+                        elements.leaderboardBody.appendChild(row);
+                    });
+            }
+            
+            // Додавання до таблиці рекордів
+            function addToLeaderboard(score) {
+                const leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard')) || [];
+                const name = prompt('Введіть ваше імʼя для таблиці рекордів:', 'Гравець');
+                
+                if (name !== null) {
+                    leaderboard.push({
+                        name,
+                        score,
+                        difficulty: settings.difficulties[gameState.difficulty].name,
+                        speed: settings.speeds[gameState.speed].name,
+                        date: new Date().toLocaleDateString()
+                    });
+                    
+                    localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
+                    loadLeaderboard();
+                }
+            }
+            
+            // Налаштування слухачів подій
+            function setupEventListeners() {
+                // Кнопки гри
+                elements.startGameBtn.addEventListener('click', startGame);
+                elements.resumeBtn.addEventListener('click', togglePause);
+                elements.restartBtn.addEventListener('click', resetGame);
+                elements.newGameBtn.addEventListener('click', () => {
+                    elements.gameOverScreen.classList.add('hidden');
+                    resetGame();
+                    elements.startScreen.classList.remove('hidden');
+                });
+                
+                // Керування
+                document.addEventListener('keydown', changeDirection);
+                elements.upBtn.addEventListener('click', changeDirection);
+                elements.downBtn.addEventListener('click', changeDirection);
+                elements.leftBtn.addEventListener('click', changeDirection);
+                elements.rightBtn.addEventListener('click', changeDirection);
+                
+                // Налаштування
+                elements.difficultySelect.addEventListener('change', () => {
+                    gameState.difficulty = elements.difficultySelect.value;
+                    updateDifficulty();
+                    saveSettings();
+                    createGrid();
+                });
+                
+                elements.speedSelect.addEventListener('change', () => {
+                    gameState.speed = elements.speedSelect.value;
+                    updateSpeed();
+                    saveSettings();
+                    
+                    if (gameState.isRunning) {
+                        clearInterval(gameState.gameInterval);
+                        gameState.gameInterval = setInterval(gameLoop, gameState.gameSpeed);
+                    }
+                });
+                
+                elements.snakeColor.addEventListener('input', () => {
+                    gameState.snakeColor = elements.snakeColor.value;
+                    saveSettings();
+                    render();
+                });
+                
+                elements.randomSnakeColor.addEventListener('click', () => {
+                    const randomColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                    gameState.snakeColor = randomColor;
+                    elements.snakeColor.value = randomColor;
+                    saveSettings();
+                    render();
+                });
+                
+                // Тема
+                elements.themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDark = document.body.classList.contains('dark-mode');
+                    localStorage.setItem('snakeTheme', isDark ? 'dark' : 'light');
+                });
+                
+                // Звук
+                elements.soundToggle.addEventListener('click', () => {
+                    // Поки що без звуку, можна додати пізніше
+                });
+                
+                // Початок гри при кліку на поле
+                elements.gameGrid.addEventListener('click', () => {
+                    if (!gameState.isRunning && elements.startScreen.classList.contains('hidden')) {
+                        togglePause();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

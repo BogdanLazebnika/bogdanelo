@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Фіксований заголовок всередині контейнера</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+    }
+
+    .spacer {
+      height: 100vh;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 24px;
+    }
+
+    .container {
+      position: relative;
+      min-height: 600px;
+      background: #e0f7fa;
+      padding-top: 40px; /* місце для заголовка */
+    }
+
+    .fixed-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #00bcd4;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .fixed-title.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content p {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="spacer">⬇ Прокрути вниз</div>
+
+  <div class="container" id="container">
+    <div class="fixed-title" id="title">Фіксована назва секції</div>
+    <div class="content">
+      <!-- Много контента для скролу -->
+      <p>Пункт 1</p>
+      <p>Пункт 2</p>
+      <p>Пункт 3</p>
+      <p>Пункт 4</p>
+      <p>Пункт 5</p>
+      <p>Пункт 6</p>
+      <p>Пункт 7</p>
+      <p>Пункт 8</p>
+      <p>Пункт 9</p>
+      <p>Пункт 10</p>
+    </div>
+  </div>
+
+  <div class="spacer">⬆ Прокрути вгору</div>
+
+  <script>
+    const container = document.getElementById('container');
+    const title = document.getElementById('title');
+
+    window.addEventListener('scroll', () => {
+      const rect = container.getBoundingClientRect();
+
+      if (rect.top <= 0 && rect.bottom >= title.offsetHeight) {
+        title.classList.add('fixed');
+      } else {
+        title.classList.remove('fixed');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Змійка</title>
+  <style>
+    body {
+      background: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      font-family: sans-serif;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    #game {
+      border: 2px solid #fff;
+      background: #111;
+      margin-top: 20px;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #score {
+      margin-top: 10px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Гра "Змійка"</h1>
+  <canvas id="game" width="400" height="400"></canvas>
+  <p id="score">Очки: 0</p>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    const box = 20;
+    const canvasSize = 400;
+    let score = 0;
+
+    // Змійка
+    let snake = [{ x: 9 * box, y: 9 * box }];
+    let direction = null;
+
+    // Їжа
+    let food = {
+      x: Math.floor(Math.random() * (canvasSize / box)) * box,
+      y: Math.floor(Math.random() * (canvasSize / box)) * box
+    };
+
+    // Обробка клавіш
+    document.addEventListener("keydown", changeDirection);
+
+    function changeDirection(e) {
+      if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+      if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+      if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+      if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+    }
+
+    function drawGame() {
+      // Фон
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Малюємо змійку
+      for (let i = 0; i < snake.length; i++) {
+        ctx.fillStyle = i === 0 ? "#0f0" : "#0a0";
+        ctx.fillRect(snake[i].x, snake[i].y, box, box);
+      }
+
+      // Малюємо їжу
+      ctx.fillStyle = "#f00";
+      ctx.fillRect(food.x, food.y, box, box);
+
+      // Рух
+      let headX = snake[0].x;
+      let headY = snake[0].y;
+
+      if (direction === "LEFT") headX -= box;
+      if (direction === "RIGHT") headX += box;
+      if (direction === "UP") headY -= box;
+      if (direction === "DOWN") headY += box;
+
+      // Кінець гри (зіткнення зі стіною або тілом)
+      if (
+        headX < 0 || headX >= canvasSize ||
+        headY < 0 || headY >= canvasSize ||
+        collision(headX, headY, snake)
+      ) {
+        clearInterval(game);
+        alert("Гра закінчена! Твій результат: " + score);
+        return;
+      }
+
+      // З'їв їжу?
+      if (headX === food.x && headY === food.y) {
+        score++;
+        document.getElementById("score").textContent = "Очки: " + score;
+        food = {
+          x: Math.floor(Math.random() * (canvasSize / box)) * box,
+          y: Math.floor(Math.random() * (canvasSize / box)) * box
+        };
+      } else {
+        snake.pop(); // видаляємо хвіст
+      }
+
+      // Нова голова
+      const newHead = { x: headX, y: headY };
+      snake.unshift(newHead);
+    }
+
+    function collision(x, y, array) {
+      for (let i = 0; i < array.length; i++) {
+        if (x === array[i].x && y === array[i].y) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    const game = setInterval(drawGame, 100);
+  </script>
+</body>
+</html>
