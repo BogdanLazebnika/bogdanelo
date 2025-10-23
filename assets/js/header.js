@@ -91,23 +91,38 @@ document.querySelectorAll('.nav-list a').forEach(link => {
 
 
 // === 📌 Логіка бургер-меню
+// === 📌 Логіка бургер-меню
 const hamburger = document.getElementById('hamburger');
 const nav = document.getElementById('nav');
-const header = document.querySelector('.header'); // Перенесено сюди
+const header = document.querySelector('.header');
+
+let scrollPosition = 0;
 
 hamburger.addEventListener('click', () => {
   const isActive = nav.classList.toggle('active');
   hamburger.classList.toggle('active');
 
-  // Додаємо/знімаємо клас для фіксованого хедера
   if (isActive) {
+    // ✅ Меню відкрите
     header.classList.add('fixed-header');
-    document.body.classList.add('no-scroll'); // щоб за потреби блокувати прокрутку
+    scrollPosition = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.classList.add('no-scroll');
   } else {
+    // ❌ Меню закрите
     header.classList.remove('fixed-header');
     document.body.classList.remove('no-scroll');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    window.scrollTo(0, scrollPosition);
   }
 });
+
 
 
 // === 📌 Логіка приховування хедера при скролі

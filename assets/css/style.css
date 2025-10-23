@@ -41,6 +41,7 @@ body{
     background-color: var(--background-color);
 }
 
+
 .container{
     max-width: calc(1024px + 171px * 2);
     margin-left: auto;
