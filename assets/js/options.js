@@ -546,4 +546,19 @@ async function loadAllComponents() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadAllComponents,);
+// === 📌 Стандартні налаштування при першому запуску
+(function setDefaultUserSettings() {
+  const saved = localStorage.getItem('siteSettings');
+  if (!saved) {
+    const defaultSettings = {
+      fixedHeader: true, // ✅ плаваюча шапка — стандарт
+      theme: 'light',
+      accentColor: '#C778DD',
+    };
+    localStorage.setItem('siteSettings', JSON.stringify(defaultSettings));
+  }
+})();
+
+// === 📌 Запуск після завантаження DOM
+document.addEventListener('DOMContentLoaded', loadAllComponents);
+
