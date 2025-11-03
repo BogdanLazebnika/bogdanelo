@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bogdanlazebnika.github.io/</loc>
+    <loc>https://bogdanlazebnika.github.io/bogdanelo/</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
   </url>
 
   <url>
-    <loc>https://bogdanlazebnika.github.io/about.html</loc>
+    <loc>https://bogdanlazebnika.github.io/bogdanelo/about.html</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://bogdanlazebnika.github.io/contact.html</loc>
+    <loc>https://bogdanlazebnika.github.io/bogdanelo/contact.html</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://bogdanlazebnika.github.io/projects.html</loc>
+    <loc>https://bogdanlazebnika.github.io/bogdanelo//projects.html</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://bogdanlazebnika.github.io/en/</loc>
+    <loc>https://bogdanlazebnika.github.io/bogdanelo/en/</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>
+
 
